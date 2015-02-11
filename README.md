@@ -60,7 +60,7 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 <H4>通知栏操作</H4>
 <pre>	My.Notification.Hold()，轻松创建一个不可以被用户左滑删除掉的顶部通知。</pre>
 <H3>   </H3>
-<pre>友情提示：别忘了有些操作是需要权限的哦(可参照AndroidManifest)。<pre>
+<pre>友情提示：别忘了有些操作是需要权限的哦(可参照源码示例)。<pre>
 <pre>代码总是少不了BUG，有不足之处还望指出。<pre>
 <H3>   </H3>
 <H3>更多功能，欢迎导入My.java，然后自行探索。</H3>
