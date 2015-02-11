@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:paddingRight="20dp" >
+
+    <View
+        android:id="@+id/timeline_view1"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="71dp"
+        android:background="#A6A6A6" />
+
+    <TextView
+        android:id="@+id/timeline_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeline_view1"
+        android:layout_marginLeft="30dp"
+        android:text="时间"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/timeline_image1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/timeline_view1"
+        android:layout_marginLeft="65dp"
+        android:src="@drawable/timeline_circle" />
+
+    <View
+        android:id="@+id/timeline_view2"
+        android:layout_width="1dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/timeline_image1"
+        android:layout_marginLeft="71dp"
+        android:background="#A6A6A6" />
+
+    <RelativeLayout
+        android:id="@+id/timeline_layout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeline_image1"
+        android:layout_marginTop="-20dp"
+        android:layout_toRightOf="@+id/timeline_image1"
+        android:background="@drawable/timeline_bg"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/timeline_image2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/timeline_bg2" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:maxEms="7"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:text="标题"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

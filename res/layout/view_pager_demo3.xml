@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:background="#99FF99" >
+
+    <ImageView
+        android:id="@+id/demo_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#AAFFAA" 
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/ic_launcher" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/demo_logo"
+        android:layout_toRightOf="@+id/demo_logo"
+        android:background="#AAffAA" 
+        android:src="@drawable/ic_launcher" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/demo_logo"
+        android:focusable="false"
+        android:focusableInTouchMode="false" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/demo_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false" >
+
+            <ImageView
+                android:id="@+id/set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="20dp"
+                android:background="#AAFFAA"
+                android:clickable="true" 
+                android:src="@drawable/ic_launcher"/>
+
+            <ImageView
+                android:id="@+id/two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/set"
+                android:layout_below="@+id/set"
+                android:layout_marginTop="20dp"
+                android:background="#AAFFAA"
+                android:clickable="true" 
+                android:src="@drawable/ic_launcher"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/set"
+                android:layout_below="@+id/two"
+                android:layout_marginTop="20dp"
+                android:background="#AAFFAA"
+                android:clickable="true" 
+                android:src="@drawable/ic_launcher"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+</RelativeLayout>

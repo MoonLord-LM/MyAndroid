@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+        android:background="#AAFFAA" >
+
+    <TextView
+        android:id="@+id/demo_left"
+        android:layout_width="20dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" 
+        android:background="#AAFFAA"/>
+
+    <GridView
+        android:id="@+id/gridView2"
+        android:layout_width="260dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/demo_left"
+        android:background="#AAFFAA"
+        android:numColumns="2" >
+    </GridView>
+
+    <TextView
+        android:id="@+id/demo_right"
+        android:layout_width="50dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" 
+        android:background="#AAFFAA"/>
+
+</RelativeLayout>
