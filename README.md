@@ -14,9 +14,8 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 技术支持：武汉大学RMC工作室 武汉大学计算机协会
 </pre>
 
-<H3>Android（JAVA & Eclipse）开发的面向过程（模块化）的代码，各种封装好的类和函数，方便编码，加速开发进度。</H3>
+<H3>Android（JAVA & Eclipse）开发的面向过程（模块化）的代码，各种封装好的类和函数，加速开发进度。主要模块如下：</H3>
 
-<H3>主要模块有</H3>：
 <H4>主窗体全局静态引用</H4>
 <pre>	在任何地方都可以使用My.MainActivity获取主Activity的引用。</pre>
 <H4>常用的常量</H4>
@@ -61,16 +60,7 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 <H4>通知栏操作</H4>
 <pre>	My.Notification.Hold()，轻松创建一个不可以被用户左滑删除掉的顶部通知。</pre>
 
-<H3>更多功能，欢迎导入My.java然后自行探索。持续更新，欢迎关注。</H3>
-
-<H5>友情提示，别忘了有些操作是需要权限的哟：</H5>
-<pre>
-<uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-<uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-<uses-permission android:name="android.permission.WAKE_LOCK" />
-<uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-<uses-permission android:name="android.permission.CAMERA"/>
-<uses-permission android:name="android.permission.VIBRATE"/>
-</pre>
+<H3>更多功能，欢迎导入My.java，然后自行探索。</H3>
+<H3>持续更新维护，求Fork，求Star。</H3>
+<H5>代码总是少不了BUG，有不足之处还望指出。</H5>
+<H5>友情提示，别忘了有些操作是需要权限的哟（可参照AndroidManifest.xml）。</H5>
