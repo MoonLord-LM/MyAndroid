@@ -1,13 +1,15 @@
 # MyAndroid
 A rapid development framework for android development.
 
-MyAndroid 安卓开发中文开源库 
+<H1>MyAndroid 安卓开发中文开源库 </H1>
 
+<pre>
 版本1.0 （2015.2.10） 安卓SDK版本要求：11-21（安卓3.0-安卓5.0.1） 统一编码：UTF-8 代码：5137行 
 使用提示：请确保项目的主Activity继承自MyActivity。 代码在Android 4.0环境下编译成功，无错误，无警告。 
 GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid 
 MoonLord 联系QQ：178910432 交流QQ群：130490067 
-技术支持：武汉大学RMC工作室 武汉大学计算机协会 
+技术支持：武汉大学RMC工作室 武汉大学计算机协会
+</pre>
 
 主要功能：Android（JAVA & Eclipse）开发的面向过程（模块化）的代码，各种封装好的类和函数，方便编码，加速开发进度。
 
