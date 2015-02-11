@@ -1,10 +1,8 @@
-# MyAndroid
-A rapid development framework for android development.
-
 <H1>MyAndroid 安卓开发中文开源库 </H1>
+# MyAndroid, a rapid development framework for android development.
 
 <pre>
-版本1.0 （2015.2.10） 安卓SDK版本要求：11-21（安卓3.0-安卓5.0.1） 统一编码：UTF-8 代码：5137行 
+版本1.0 (2015.2.10) 安卓SDK版本要求：11-21(安卓3.0-安卓5.0.1) 统一编码：UTF-8 代码：5137行 
 使用提示：请确保项目的主Activity继承自MyActivity。
 代码在Android 4.0环境下编译成功，无错误，无警告。 
 GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid 
@@ -31,12 +29,14 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 <H4>AlertDialog输出信息</H4>
 <pre>	new My.AlertDialog.New().show();可创建单选、按钮、多选、图片等各类对话框。</pre>
 <H4>网络数据交互</H4>
-<pre>	从简单的My.Http.Get("http://www.moonlord.cn")，获取网页源码，到最复杂的My.Http.UpLoadSDCard()，可以支持在上传SD卡的文件的同时发送GET、POST、COOKIE、REFERER参数，并获取响应的源码。</pre>
+<pre>	从简单的My.Http.Get("http://www.moonlord.cn")，获取网页源码。</pre>
+<pre>	到最复杂的My.Http.UpLoadSDCard()，可以支持在上传SD卡的文件的同时发送GET、POST、COOKIE、REFERER参数，并获取响应的源码。</pre>
 <H4>数学计算</H4>
-<pre>	My.Maths.SmoothChangeLightColor.NewColor()，每次调用都会返回一个不同的鲜艳的颜色int值，不断获取的颜色连贯起来是鲜艳的七色光（源码中有示例效果）。</pre>
+<pre>	My.Maths.SmoothChangeLightColor.NewColor()，每次调用都会返回一个不同的鲜艳的颜色int值。</pre>
+<pre>	不断获取的颜色连贯起来是鲜艳的七色光（源码中有示例效果）。</pre>
 <H4>自定义数据结构</H4>
-<pre>	My.Class.KeyValue数据结构，自定义的字符串键值对存储结构，提供一系列丰富的增、删、改、查、输出函数。
-	My.Class.Json数据结构，自定义的JSON数据结构，封装了org.json.JSONArray和org.json.JSONObject，提供更加丰富和便捷的增、删、改、查、输出、转化等功能，代码示例：Json1.Get("root").Get(1).Get("username").GetInt(0);</pre>
+<pre>	My.Class.KeyValue数据结构，自定义的字符串键值对存储结构，提供一系列丰富的增、删、改、查、输出函数。</pre>
+<pre>	My.Class.Json数据结构，自定义的JSON数据结构，封装了org.json.JSONArray和org.json.JSONObject，提供更加丰富和便捷的增、删、改、查、输出、转化等功能，代码示例：Json1.Get("root").Get(1).Get("username").GetInt(0);</pre>
 <H4>设备信息</H4>
 <pre>	My.Device.ProductTime()，轻松获取安卓产品生产日期。</pre>
 <H4>时间信息</H4>
@@ -60,7 +60,7 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 <H4>通知栏操作</H4>
 <pre>	My.Notification.Hold()，轻松创建一个不可以被用户左滑删除掉的顶部通知。</pre>
 
+<H5>友情提示，别忘了有些操作是需要权限的哟（可参照AndroidManifest.xml）。</H5>
+<H5>代码总是少不了BUG，有不足之处还望指出。</H5>
 <H3>更多功能，欢迎导入My.java，然后自行探索。</H3>
 <H3>持续更新维护，求Fork，求Star。</H3>
-<H5>代码总是少不了BUG，有不足之处还望指出。</H5>
-<H5>友情提示，别忘了有些操作是需要权限的哟（可参照AndroidManifest.xml）。</H5>
