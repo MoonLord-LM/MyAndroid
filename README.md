@@ -1,6 +1,6 @@
 <H1>MyAndroid 安卓开发中文开源库 </H1>
 <pre>MyAndroid, a rapid development framework for android development.</pre>
-<H3></H3>
+<H3>   </H3>
 <pre>
 版本1.0 (2015.2.10) 安卓SDK版本要求：11-21(安卓3.0-安卓5.0.1) 统一编码：UTF-8 代码：5137行 
 使用提示：请确保项目的主Activity继承自MyActivity。
@@ -12,7 +12,7 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 技术支持：武汉大学RMC工作室 武汉大学计算机协会
 </pre>
 <H3>Android（JAVA & Eclipse）开发的面向过程（模块化）的代码，各种封装好的类和函数，加速开发进度。主要模块如下：</H3>
-<H4></H4>
+<H4>   </H4>
 <H4>主窗体全局静态引用</H4>
 <pre>	在任何地方都可以使用My.MainActivity获取主Activity的引用。</pre>
 <H4>常用的常量</H4>
@@ -29,7 +29,7 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 <pre>	new My.AlertDialog.New().show();可创建单选、按钮、多选、图片等各类对话框。</pre>
 <H4>网络数据交互</H4>
 <pre>	从简单的My.Http.Get("http://www.moonlord.cn")，获取网页源码。</pre>
-<pre>	到最复杂的My.Http.UpLoadSDCard()，可以支持在上传SD卡的文件的同时发送GET、POST、COOKIE、REFERER参数，并获取响应的源码。</pre>
+<pre>	到复杂的My.Http.UpLoadSDCard()，可在上传SD卡的文件的同时发送GET、POST、COOKIE、REFERER参数，并获取响应源码。</pre>
 <H4>数学计算</H4>
 <pre>	My.Maths.SmoothChangeLightColor.NewColor()，每次调用都会返回一个不同的鲜艳的颜色int值。</pre>
 <pre>	不断获取的颜色连贯起来是鲜艳的七色光（源码中有示例效果）。</pre>
@@ -59,8 +59,9 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 <pre>	My.Timer.IntervalTimerTask，可定时执行、并且跨线程操作UI的Runnable扩展类。</pre>
 <H4>通知栏操作</H4>
 <pre>	My.Notification.Hold()，轻松创建一个不可以被用户左滑删除掉的顶部通知。</pre>
-<H3></H3>
+<H3>   </H3>
 <pre>友情提示，别忘了有些操作是需要权限的哟（可参照AndroidManifest.xml）。<pre>
 <pre>代码总是少不了BUG，有不足之处还望指出。<pre>
+<H3>   </H3>
 <H3>更多功能，欢迎导入My.java，然后自行探索。</H3>
 <H3>持续更新维护，求Fork，求Star。</H3>
