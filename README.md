@@ -9,7 +9,7 @@ GitHub开源地址：http://github.com/MoonLord-LM/MyAndroid
 维护：MoonLord
 联系QQ：178910432
 交流QQ群：130490067 
-技术支持：武汉大学RMC工作室 武汉大学计算机协会
+技术支持：月翼科技
 </pre>
 <H3>Android（JAVA & Eclipse）开发的面向过程（模块化）的代码，各种封装好的类和函数，加速开发进度。主要模块如下：</H3>
 <H4>   </H4>
