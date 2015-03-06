@@ -2901,52 +2901,160 @@ public class My {
 	public static class Class {
 		// KeyValue键值动态数组
 		public static class KeyValue {
-			public java.util.ArrayList<java.lang.String> Key = new java.util.ArrayList<java.lang.String>();
-			public java.util.ArrayList<java.lang.String> Value = new java.util.ArrayList<java.lang.String>();
-			public int Length = 0;
+			//
+			// 成员变量
+			private java.util.ArrayList<java.lang.String> Key = new java.util.ArrayList<java.lang.String>();
+			private java.util.ArrayList<java.lang.String> Value = new java.util.ArrayList<java.lang.String>();
+			private int Length = 0;
+			private boolean KeyUnique = false;// 键唯一
+			private boolean ValueUnique = false;// 值唯一
+			private boolean KeyAndValueUnique = false;// 键值组合唯一
+			//
+			// 构造函数
 			public KeyValue() {}
 			public KeyValue(java.lang.String KeyString, java.lang.String ValueString) {
 				Add(KeyString, ValueString);
 			}
-			public void Add(java.lang.String KeyString, java.lang.String ValueString) {
-				Key.add(KeyString);
-				Value.add(ValueString);
-				Length = Length + 1;
+			public KeyValue(KeyValue KeyValueInstance) {
+				// 直接Key =KeyValueInstance.Key;赋值会导致两个KeyValue关联到一起。
+				// Key =KeyValueInstance.Key;
+				// Value =KeyValueInstance.Value;
+				Key = new java.util.ArrayList<java.lang.String>(KeyValueInstance.Key);
+				Value = new java.util.ArrayList<java.lang.String>(KeyValueInstance.Value);
+				Length = KeyValueInstance.Length;
 			}
-			public void Delete(int index) {
-				Key.remove(index);
-				Value.remove(index);
-				Length = Length - 1;
+			//
+			// 读取内部成员（只读不修改）
+			public int Length() {
+				return Length;
 			}
-			public void DeleteByKey(java.lang.String KeyString) {
-				int i = 0;
-				while (i != Length) {
+			public int Size() {
+				return Length;
+			}
+			public boolean IsKeyUnique() {
+				return KeyUnique;
+			}
+			public boolean IsValueUnique() {
+				return ValueUnique;
+			}
+			public boolean IsKeyAndValueUnique() {
+				return KeyAndValueUnique;
+			}
+			public java.lang.String[] KeyToArray() {
+				Object[] tempObjects = Key.toArray();
+				java.lang.String[] tempStrings = new java.lang.String[tempObjects.length];
+				for (int i = 0; i < tempStrings.length; i++) {
+					tempStrings[i] = tempObjects[i].toString();
+				}
+				return tempStrings;
+			}
+			public java.lang.String[] ValueToArray() {
+				Object[] tempObjects = Value.toArray();
+				java.lang.String[] tempStrings = new java.lang.String[tempObjects.length];
+				for (int i = 0; i < tempStrings.length; i++) {
+					tempStrings[i] = tempObjects[i].toString();
+				}
+				return tempStrings;
+			}
+			// Key或Value转化为List的接口实现
+			// List是可以重复的集合，转化后信息无损失
+			public java.util.ArrayList<java.lang.String> KeyToArrayList() {
+				return new java.util.ArrayList<java.lang.String>(Key);
+			}
+			public java.util.ArrayList<java.lang.String> ValueToArrayList() {
+				return new java.util.ArrayList<java.lang.String>(Value);
+			}
+			public java.util.LinkedList<java.lang.String> KeyToLinkedList() {
+				return new java.util.LinkedList<java.lang.String>(Key);
+			}
+			public java.util.LinkedList<java.lang.String> ValueToLinkedList() {
+				return new java.util.LinkedList<java.lang.String>(Value);
+			}
+			public java.util.Vector<java.lang.String> KeyToVector() {
+				return new java.util.Vector<java.lang.String>(Key);
+			}
+			public java.util.Vector<java.lang.String> ValueToVector() {
+				return new java.util.Vector<java.lang.String>(Value);
+			}
+			// Key或Value转化为Set和SortedSet的接口实现
+			// Set是不可重复的集合，转化后可能会有损失
+			public java.util.HashSet<java.lang.String> KeyToHashSet() {
+				return new java.util.HashSet<java.lang.String>(Key);
+			}
+			public java.util.HashSet<java.lang.String> ValueToHashSet() {
+				return new java.util.HashSet<java.lang.String>(Value);
+			}
+			public java.util.LinkedHashSet<java.lang.String> KeyToLinkedHashSet() {
+				return new java.util.LinkedHashSet<java.lang.String>(Key);
+			}
+			public java.util.LinkedHashSet<java.lang.String> ValueToLinkedHashSet() {
+				return new java.util.LinkedHashSet<java.lang.String>(Value);
+			}
+			public java.util.TreeSet<java.lang.String> KeyToTreeSet() {
+				return new java.util.TreeSet<java.lang.String>(Key);
+			}
+			public java.util.TreeSet<java.lang.String> ValueToTreeSet() {
+				return new java.util.TreeSet<java.lang.String>(Value);
+			}
+			// Key和Value一起转化为Map和SortedMap的接口实现
+			// Map是一对多的关系，故Map的size()函数返回的是不重复的Key的数量
+			public java.util.HashMap<java.lang.String, java.lang.String> ToHashMap() {
+				java.util.HashMap<java.lang.String, java.lang.String> tempHashMap = new java.util.HashMap<java.lang.String, java.lang.String>();
+				for (int i = 0; i < Length; i++) {
+					tempHashMap.put(Key.get(i), Value.get(i));
+				}
+				return tempHashMap;
+			}
+			public java.util.Hashtable<java.lang.String, java.lang.String> ToHashtable() {
+				java.util.Hashtable<java.lang.String, java.lang.String> tempHashtable = new java.util.Hashtable<java.lang.String, java.lang.String>();
+				for (int i = 0; i < Length; i++) {
+					tempHashtable.put(Key.get(i), Value.get(i));
+				}
+				return tempHashtable;
+			}
+			public java.util.LinkedHashMap<java.lang.String, java.lang.String> ToLinkedHashMap() {
+				java.util.LinkedHashMap<java.lang.String, java.lang.String> tempLinkedHashMap = new java.util.LinkedHashMap<java.lang.String, java.lang.String>();
+				for (int i = 0; i < Length; i++) {
+					tempLinkedHashMap.put(Key.get(i), Value.get(i));
+				}
+				return tempLinkedHashMap;
+			}
+			public java.util.TreeMap<java.lang.String, java.lang.String> ToTreeMap() {
+				java.util.TreeMap<java.lang.String, java.lang.String> tempTreeMap = new java.util.TreeMap<java.lang.String, java.lang.String>();
+				for (int i = 0; i < Length; i++) {
+					tempTreeMap.put(Key.get(i), Value.get(i));
+				}
+				return tempTreeMap;
+			}
+			//
+			// 判断是否存在
+			public boolean HasKey(java.lang.String KeyString) {
+				for (int i = 0; i < Length; i++) {
 					if (Key.get(i) == KeyString) {
-						Key.remove(i);
-						Value.remove(i);
-						Length = Length - 1;
+						return true;
 					}
-					else {
-						i = i + 1;
-					}
-					// My.Log("" + i + ":" + Length);
 				}
+				return false;
 			}
-			public void DeleteByValue(java.lang.String ValueString) {
-				int i = 0;
-				while (i != Length) {
+			public boolean HasValue(java.lang.String ValueString) {
+				for (int i = 0; i < Length; i++) {
 					if (Value.get(i) == ValueString) {
-						Key.remove(i);
-						Value.remove(i);
-						Length = Length - 1;
+						return true;
 					}
-					else {
-						i = i + 1;
-					}
-					// My.Log("" + i + ":" + Length);
 				}
+				return false;
 			}
-			public java.lang.String[] GetKeyAndValue(int index) {
+			public boolean HasKeyAndValue(java.lang.String KeyString, java.lang.String ValueString) {
+				for (int i = 0; i < Length; i++) {
+					if (Key.get(i) == KeyString && Value.get(i) == ValueString) {
+						return true;
+					}
+				}
+				return false;
+			}
+			//
+			// 获取值（字符串准确相等）
+			public java.lang.String[] Get(int index) {
 				return new java.lang.String[] { Key.get(index), Value.get(index) };
 			}
 			public java.lang.String GetKey(int index) {
@@ -2954,6 +3062,19 @@ public class My {
 			}
 			public java.lang.String GetValue(int index) {
 				return Value.get(index);
+			}
+			public java.lang.String[] GetKey(java.lang.String ValueString) {
+				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
+				for (int i = 0; i < Length; i++) {
+					if (Value.get(i) == ValueString) {
+						tempArrayList.add(i);
+					}
+				}
+				java.lang.String[] temp = new java.lang.String[tempArrayList.size()];
+				for (int i = 0; i < tempArrayList.size(); i++) {
+					temp[i] = Key.get(i);
+				}
+				return temp;
 			}
 			public java.lang.String[] GetValue(java.lang.String KeyString) {
 				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
@@ -2984,14 +3105,281 @@ public class My {
 				}
 				return "";
 			}
-			public void SetKeyAndValue(int index, java.lang.String KeyString, java.lang.String ValueString) {
+			public java.lang.String GetLastKey(java.lang.String ValueString) {
+				for (int i = Length - 1; i > -1; i--) {
+					if (Value.get(i) == ValueString) {
+						return Key.get(i);
+					}
+				}
+				return "";
+			}
+			public java.lang.String GetLastValue(java.lang.String KeyString) {
+				for (int i = Length - 1; i > -1; i--) {
+					if (Key.get(i) == KeyString) {
+						return Value.get(i);
+					}
+				}
+				return "";
+			}
+			public int GetFirstKeyIndex(java.lang.String KeyString) {
+				return Key.indexOf(KeyString);
+			}
+			public int GetFirstValueIndex(java.lang.String KeyString) {
+				return Value.indexOf(KeyString);
+			}
+			public int[] GetKeyIndex(java.lang.String KeyString) {
+				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
+				for (int i = 0; i < Length; i++) {
+					if (Key.get(i) == KeyString) {
+						tempArrayList.add(i);
+					}
+				}
+				// ArrayList转数组
+				int[] temp = new int[tempArrayList.size()];
+				for (int i = 0; i < temp.length; i++) {
+					temp[i] = tempArrayList.get(i);
+				}
+				return temp;
+			}
+			public int[] GetValueIndex(java.lang.String ValueString) {
+				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
+				for (int i = 0; i < Length; i++) {
+					if (Value.get(i) == ValueString) {
+						tempArrayList.add(i);
+					}
+				}
+				// ArrayList转数组
+				int[] temp = new int[tempArrayList.size()];
+				for (int i = 0; i < temp.length; i++) {
+					temp[i] = tempArrayList.get(i);
+				}
+				return temp;
+			}
+			//
+			// 模糊搜索值（字符串包含）
+			public java.lang.String[] SearchKey(java.lang.String ValueWord) {
+				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
+				for (int i = 0; i < Length; i++) {
+					if (Value.get(i).contains(ValueWord)) {
+						tempArrayList.add(i);
+					}
+				}
+				java.lang.String[] temp = new java.lang.String[tempArrayList.size()];
+				for (int i = 0; i < tempArrayList.size(); i++) {
+					temp[i] = Key.get(i);
+				}
+				return temp;
+			}
+			public java.lang.String[] SearchValue(java.lang.String KeyWord) {
+				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
+				for (int i = 0; i < Length; i++) {
+					if (Key.get(i).contains(KeyWord)) {
+						tempArrayList.add(i);
+					}
+				}
+				java.lang.String[] temp = new java.lang.String[tempArrayList.size()];
+				for (int i = 0; i < tempArrayList.size(); i++) {
+					temp[i] = Value.get(i);
+				}
+				return temp;
+			}
+			public java.lang.String SearchFirstKey(java.lang.String ValueWord) {
+				for (int i = 0; i < Length; i++) {
+					if (Value.get(i).contains(ValueWord)) {
+						return Key.get(i);
+					}
+				}
+				return "";
+			}
+			public java.lang.String SearchFirstValue(java.lang.String KeyWord) {
+				for (int i = 0; i < Length; i++) {
+					if (Key.get(i).contains(KeyWord)) {
+						return Value.get(i);
+					}
+				}
+				return "";
+			}
+			public java.lang.String SearchLastKey(java.lang.String ValueWord) {
+				for (int i = Length - 1; i > -1; i--) {
+					if (Value.get(i).contains(ValueWord)) {
+						return Key.get(i);
+					}
+				}
+				return "";
+			}
+			public java.lang.String SearchLastValue(java.lang.String KeyWord) {
+				for (int i = Length - 1; i > -1; i--) {
+					if (Key.get(i).contains(KeyWord)) {
+						return Value.get(i);
+					}
+				}
+				return "";
+			}
+			public int SearchFirstKeyIndex(java.lang.String KeyWord) {
+				for (int i = 0; i < Length; i++) {
+					if (Key.get(i).contains(KeyWord)) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			public int SearchFirstValueIndex(java.lang.String ValueWord) {
+				for (int i = 0; i < Length; i++) {
+					if (Value.get(i).contains(ValueWord)) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			public int[] SearchKeyIndex(java.lang.String KeyWord) {
+				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
+				for (int i = 0; i < Length; i++) {
+					if (Key.get(i).contains(KeyWord)) {
+						tempArrayList.add(i);
+					}
+				}
+				// ArrayList转数组
+				int[] temp = new int[tempArrayList.size()];
+				for (int i = 0; i < temp.length; i++) {
+					temp[i] = tempArrayList.get(i);
+				}
+				return temp;
+			}
+			public int[] SearchValueIndex(java.lang.String ValueWord) {
+				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
+				for (int i = 0; i < Length; i++) {
+					if (Value.get(i).contains(ValueWord)) {
+						tempArrayList.add(i);
+					}
+				}
+				// ArrayList转数组
+				int[] temp = new int[tempArrayList.size()];
+				for (int i = 0; i < temp.length; i++) {
+					temp[i] = tempArrayList.get(i);
+				}
+				return temp;
+			}
+			//
+			// 添加（返回是否添加成功）
+			public boolean Add(java.lang.String KeyString, java.lang.String ValueString) {
+				if (KeyUnique && HasKey(KeyString)) {
+					return false;
+				}
+				if (ValueUnique && HasValue(ValueString)) {
+					return false;
+				}
+				if (KeyAndValueUnique && HasKeyAndValue(KeyString, ValueString)) {
+					return false;
+				}
+				Key.add(KeyString);
+				Value.add(ValueString);
+				Length = Length + 1;
+				return true;
+			}
+			//
+			// 删除（返回删除元素的数量）
+			public boolean Delete(int index) {
+				try {
+					Key.remove(index);
+					Value.remove(index);
+					Length = Length - 1;
+					return true;
+				}
+				catch (Exception e) {
+					return false;
+				}
+			}
+			public int DeleteAllKey(java.lang.String KeyString) {
+				int i = 0;
+				int j = Length;
+				while (i != Length) {
+					if (Key.get(i) == KeyString) {
+						Key.remove(i);
+						Value.remove(i);
+						Length = Length - 1;
+					}
+					else {
+						i = i + 1;
+					}
+					// My.Log("" + i + ":" + Length);
+				}
+				return j - Length;
+			}
+			public int DeleteAllValue(java.lang.String ValueString) {
+				int i = 0;
+				int j = Length;
+				while (i != Length) {
+					if (Value.get(i) == ValueString) {
+						Key.remove(i);
+						Value.remove(i);
+						Length = Length - 1;
+					}
+					else {
+						i = i + 1;
+					}
+					// My.Log("" + i + ":" + Length);
+				}
+				return j - Length;
+			}
+			//
+			// 设置是否不可重复（不可重复时删除重复项）
+			public void SetKeyUnique(boolean IsUnique) {
+				KeyUnique = IsUnique;
+				if (KeyUnique) {
+					for (int i = 0; i < Length; i++) {
+						for (int j = 0; j < i; j++) {
+							if (Key.get(i) == Key.get(j)) {
+								Delete(i);// 删除
+								i--;// 重新检验
+							}
+						}
+					}
+				}
+			}
+			public void SetValueUnique(boolean IsUnique) {
+				ValueUnique = IsUnique;
+				if (ValueUnique) {
+					for (int i = 0; i < Length; i++) {
+						for (int j = 0; j < i; j++) {
+							if (Value.get(i) == Value.get(j)) {
+								Delete(i);// 删除
+								i--;// 重新检验
+							}
+						}
+					}
+				}
+			}
+			public void SetKeyAndValueUnique(boolean IsUnique) {
+				KeyAndValueUnique = IsUnique;
+				if (KeyAndValueUnique) {
+					for (int i = 0; i < Length; i++) {
+						for (int j = 0; j < i; j++) {
+							if (Key.get(i) == Key.get(j) && Value.get(i) == Value.get(j)) {
+								Delete(i);// 删除
+								i--;// 重新检验
+							}
+						}
+					}
+				}
+			}
+			//
+			// 设置值
+			public void Set(int index, java.lang.String KeyString, java.lang.String ValueString) {
 				Key.set(index, KeyString);
 				Value.set(index, ValueString);
+				// 检验重复性问题
+				SetKeyUnique(KeyUnique);
+				SetValueUnique(ValueUnique);
+				SetKeyAndValueUnique(KeyAndValueUnique);
 			}
-			public void SetKeyAndValue(int index, java.lang.String[] KeyAndValue) {
+			public void Set(int index, java.lang.String[] KeyAndValue) {
 				if (KeyAndValue.length >= 2) {
 					Key.set(index, KeyAndValue[0]);
 					Value.set(index, KeyAndValue[1]);
+					// 检验重复性问题
+					SetKeyUnique(KeyUnique);
+					SetValueUnique(ValueUnique);
+					SetKeyAndValueUnique(KeyAndValueUnique);
 				}
 			}
 			public void SetAllValue(java.lang.String KeyString, java.lang.String ValueString) {
@@ -3000,6 +3388,10 @@ public class My {
 						Value.set(i, ValueString);
 					}
 				}
+				// 检验重复性问题
+				SetKeyUnique(KeyUnique);
+				SetValueUnique(ValueUnique);
+				SetKeyAndValueUnique(KeyAndValueUnique);
 			}
 			public void SetAllValue(java.lang.String[] KeyAndValue) {
 				if (KeyAndValue.length >= 2) {
@@ -3008,51 +3400,23 @@ public class My {
 							Value.set(i, KeyAndValue[1]);
 						}
 					}
+					// 检验重复性问题
+					SetKeyUnique(KeyUnique);
+					SetValueUnique(ValueUnique);
+					SetKeyAndValueUnique(KeyAndValueUnique);
 				}
 			}
 			public void SetKey(int index, java.lang.String KeyString) {
 				Key.set(index, KeyString);
+				// 检验重复性问题
+				SetKeyUnique(KeyUnique);
+				SetKeyAndValueUnique(KeyAndValueUnique);
 			}
 			public void SetValue(int index, java.lang.String ValueString) {
 				Value.set(index, ValueString);
-			}
-			public int FirstKeyIndex(java.lang.String KeyString) {
-				return Key.indexOf(KeyString);
-			}
-			public int FirstValueIndex(java.lang.String KeyString) {
-				return Value.indexOf(KeyString);
-			}
-			public int[] KeyIndex(java.lang.String KeyString) {
-				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
-				for (int i = 0; i < Length; i++) {
-					if (Key.get(i) == KeyString) {
-						tempArrayList.add(i);
-					}
-				}
-				int[] temp = new int[tempArrayList.size()];
-				for (int i = 0; i < temp.length; i++) {
-					temp[i] = tempArrayList.get(i);
-				}
-				return temp;
-			}
-			public int[] ValueIndex(java.lang.String ValueString) {
-				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
-				for (int i = 0; i < Length; i++) {
-					if (Value.get(i) == ValueString) {
-						tempArrayList.add(i);
-					}
-				}
-				int[] temp = new int[tempArrayList.size()];
-				for (int i = 0; i < temp.length; i++) {
-					temp[i] = tempArrayList.get(i);
-				}
-				return temp;
-			}
-			public java.lang.String[] KeyArray() {
-				return (java.lang.String[]) Key.toArray();
-			}
-			public java.lang.String[] ValueArray() {
-				return (java.lang.String[]) Value.toArray();
+				// 检验重复性问题
+				SetValueUnique(ValueUnique);
+				SetKeyAndValueUnique(KeyAndValueUnique);
 			}
 		}
 		// JSON递归解析对象
@@ -3080,6 +3444,10 @@ public class My {
 					// e.printStackTrace();
 				}
 			}
+			/*
+			 * public Json(Json JsonInstance) { Array = JsonInstance.Array;
+			 * Object = JsonInstance.Object; Length = JsonInstance.Length; }
+			 */
 			public Json Get(int index) {
 				Json temp = new Json();
 				if (Array != null) {
