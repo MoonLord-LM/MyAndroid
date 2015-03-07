@@ -50,16 +50,6 @@ public class MainActivity extends MyActivity{
 			}
         };
         
-       My.Class.KeyValue A = new My.Class.KeyValue("123","456");
-       My.Class.KeyValue B = new My.Class.KeyValue(A);
-       B.SetKeyAndValueUnique(true);
-       A.SetKeyUnique(true);
-       B.Add("123","456");
-       B.Add("123","458");
-       B.Add("123","459");
-       A.Add("123","454");
        
-        My.Toast.Show(A.Length());
-        My.Toast.Show(B.KeyToArray().length);
     }
 }

@@ -9,6 +9,8 @@
 //格式化代码，Source -> Format。
 package com.MoonLord;
 
+import org.json.JSONException;
+
 /**
  * <p>
  * MyAndroid 安卓开发中文开源库
@@ -2899,6 +2901,27 @@ public class My {
 	}
 	// 自定义数据结构
 	public static class Class {
+		// /*【 示例用法】*/
+		// My.Class.KeyValue A = new My.Class.KeyValue("123","456");
+		// A.SetKeyUnique(true);
+		// A.Add("120","120");
+		//
+		// My.Class.KeyValue B = new My.Class.KeyValue(A);
+		// B.SetKeyAndValueUnique(true);
+		// B.Add("123","789");
+		// B.Add("120","111");
+		// B.Add("123","000");
+		//
+		// My.Class.Json C = new My.Class.Json(new My.Class.Json(A));
+		// My.Class.Json D = new My.Class.Json(B);
+		//
+		// My.Toast.Show(A.IsKeyAndValueUnique());
+		// My.Toast.Show(B.IsKeyUnique());
+		// My.Toast.Show(A.ToJson().JsonString());
+		// My.Toast.Show(B.ToJsonString());
+		// My.Toast.Show(C.JsonString());
+		// My.Toast.Show(D.JsonString());
+		//
 		// KeyValue键值动态数组
 		public static class KeyValue {
 			//
@@ -2922,6 +2945,9 @@ public class My {
 				Key = new java.util.ArrayList<java.lang.String>(KeyValueInstance.Key);
 				Value = new java.util.ArrayList<java.lang.String>(KeyValueInstance.Value);
 				Length = KeyValueInstance.Length;
+				SetKeyUnique(KeyValueInstance.KeyUnique);
+				SetValueUnique(KeyValueInstance.ValueUnique);
+				SetKeyAndValueUnique(KeyValueInstance.KeyAndValueUnique);
 			}
 			//
 			// 读取内部成员（只读不修改）
@@ -3124,8 +3150,8 @@ public class My {
 			public int GetFirstKeyIndex(java.lang.String KeyString) {
 				return Key.indexOf(KeyString);
 			}
-			public int GetFirstValueIndex(java.lang.String KeyString) {
-				return Value.indexOf(KeyString);
+			public int GetFirstValueIndex(java.lang.String ValueString) {
+				return Value.indexOf(ValueString);
 			}
 			public int[] GetKeyIndex(java.lang.String KeyString) {
 				java.util.ArrayList<Integer> tempArrayList = new java.util.ArrayList<Integer>();
@@ -3277,9 +3303,57 @@ public class My {
 				return true;
 			}
 			//
-			// 删除（返回删除元素的数量）
+			// 删除（返回是否删除成功，或删除元素的数量）
 			public boolean Delete(int index) {
 				try {
+					Key.remove(index);
+					Value.remove(index);
+					Length = Length - 1;
+					return true;
+				}
+				catch (Exception e) {
+					return false;
+				}
+			}
+			public boolean DeleteFirstKey(java.lang.String KeyString) {
+				try {
+					int index = Key.indexOf(KeyString);
+					Key.remove(index);
+					Value.remove(index);
+					Length = Length - 1;
+					return true;
+				}
+				catch (Exception e) {
+					return false;
+				}
+			}
+			public boolean DeleteLastKey(java.lang.String KeyString) {
+				try {
+					int index = Key.lastIndexOf(KeyString);
+					Key.remove(index);
+					Value.remove(index);
+					Length = Length - 1;
+					return true;
+				}
+				catch (Exception e) {
+					return false;
+				}
+			}
+			public boolean DeleteFirstValue(java.lang.String ValueString) {
+				try {
+					int index =Value.indexOf(ValueString);
+					Key.remove(index);
+					Value.remove(index);
+					Length = Length - 1;
+					return true;
+				}
+				catch (Exception e) {
+					return false;
+				}
+			}
+			public boolean DeleteLastValue(java.lang.String ValueString) {
+				try {
+					int index = Value.lastIndexOf(ValueString);
 					Key.remove(index);
 					Value.remove(index);
 					Length = Length - 1;
@@ -3418,17 +3492,31 @@ public class My {
 				SetValueUnique(ValueUnique);
 				SetKeyAndValueUnique(KeyAndValueUnique);
 			}
+			//
+			//转为JSON（重复的键会被靠后的键值替换）
+			public Json ToJson() {
+				return new Json(this);
+			}
+			public java.lang.String ToJsonString() {
+				org.json.JSONObject Object = new org.json.JSONObject();
+				for (int i = 0; i < Length; i++) {
+					try {
+						Object.put(GetKey(i), GetValue(i));
+					}
+					catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+				return Object.toString();
+			}
 		}
 		// JSON递归解析对象
 		public static class Json {
-			public org.json.JSONArray Array = null;
-			public org.json.JSONObject Object = null;
+			public org.json.JSONArray Array = new org.json.JSONArray();;
+			public org.json.JSONObject Object = new org.json.JSONObject();;
 			// 只有JSON格式为JSONArray时，Length才会大于0
 			public int Length = 0;
-			public Json() {
-				Array = new org.json.JSONArray();
-				Object = new org.json.JSONObject();
-			}
+			public Json() {}
 			public Json(java.lang.String jsonString) {
 				try {
 					Object = new org.json.JSONObject(jsonString);
@@ -3443,11 +3531,37 @@ public class My {
 				catch (org.json.JSONException e) {
 					// e.printStackTrace();
 				}
+			}		 
+			public Json(Json JsonInstance) {
+				try {
+					Object = new org.json.JSONObject(JsonInstance.JsonString());
+				}
+				catch (org.json.JSONException e) {
+					// e.printStackTrace();
+				}
+				try {
+					Array = new org.json.JSONArray(JsonInstance.JsonString());
+					Length = Array.length();
+				}
+				catch (org.json.JSONException e) {
+					// e.printStackTrace();
+				}
 			}
-			/*
-			 * public Json(Json JsonInstance) { Array = JsonInstance.Array;
-			 * Object = JsonInstance.Object; Length = JsonInstance.Length; }
-			 */
+			public Json(KeyValue KeyValueInstance) {
+				Array = null;
+				if (Object == null) {
+					Object = new org.json.JSONObject();
+				}
+				for (int i = 0; i < KeyValueInstance.Length; i++) {
+					try {
+						Object.put(KeyValueInstance.GetKey(i), KeyValueInstance.GetValue(i));
+					}
+					catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			//取子对象
 			public Json Get(int index) {
 				Json temp = new Json();
 				if (Array != null) {
