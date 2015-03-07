@@ -9,8 +9,6 @@
 //格式化代码，Source -> Format。
 package com.MoonLord;
 
-import org.json.JSONException;
-
 /**
  * <p>
  * MyAndroid 安卓开发中文开源库
@@ -44,6 +42,15 @@ public class My {
 	}
 	// 字符串函数
 	public static class String {
+		// ArrayList转为数组
+		public static java.lang.String[] FromArrayList(java.util.ArrayList<java.lang.String> ArrayList) {
+			java.lang.String[] tempStrings = new java.lang.String[ArrayList.size()];
+			for (int i = 0; i < ArrayList.size(); i++) {
+				tempStrings[i] = ArrayList.get(i);
+			}
+			return tempStrings;
+		}
+		// 数组转换为字符串
 		public static java.lang.String FromArray(java.lang.String[] Array, java.lang.String Parameter) {
 			java.lang.StringBuffer sb = new java.lang.StringBuffer("");
 			if (Array.length > 0) {
@@ -66,6 +73,17 @@ public class My {
 			}
 			return sb.toString();
 		}
+		public static java.lang.String FromArray(java.util.ArrayList<java.lang.String> Array, java.lang.String Parameter) {
+			java.lang.StringBuffer sb = new StringBuffer("");
+			if (Array.size() > 0) {
+				for (int i = 0; i < Array.size() - 1; i++) {
+					sb.append(Array.get(i));
+					sb.append(Parameter);
+				}
+				sb.append(Array.get(Array.size() - 1));
+			}
+			return sb.toString();
+		}
 		public static java.lang.String FromArray(java.util.ArrayList<java.lang.String> Array) {
 			java.lang.StringBuffer sb = new StringBuffer("");
 			if (Array.size() > 0) {
@@ -74,6 +92,17 @@ public class My {
 					sb.append("\r\n");
 				}
 				sb.append(Array.get(Array.size() - 1));
+			}
+			return sb.toString();
+		}
+		public static java.lang.String FromArray(java.io.File[] Array, java.lang.String Parameter) {
+			java.lang.StringBuffer sb = new java.lang.StringBuffer("");
+			if (Array.length > 0) {
+				for (int i = 0; i < Array.length - 1; i++) {
+					sb.append(Array[i].getAbsolutePath() + Array[i].getName());
+					sb.append(Parameter);
+				}
+				sb.append(Array[Array.length - 1].getAbsolutePath() + Array[Array.length - 1].getName());
 			}
 			return sb.toString();
 		}
@@ -88,25 +117,164 @@ public class My {
 			}
 			return sb.toString();
 		}
+		// /*【 示例用法】*/
+		// My.Class.XML A = new
+		// My.Class.XML("<?xml version=\"1.0\" encoding=\"UTF-8\"?><XML><Node>这是节点1</Node><Node>这是节点2</Node></XML>");
+		// My.Toast.Show(My.String.FindFirst(A.Source, "<?", "?>"));
+		// My.Toast.Show(My.String.FindMiddle(A.Source, "<Node>", "</Node>"));
+		// My.Toast.Show(My.String.FindLast(A.Source, "<Node>", "</Node>"));
+		// My.Toast.Show(My.String.FindArray(A.Source, "<Node>", "</Node>"));
+		//
+		// 搜索第一个Begin字符串，然后搜索第一个End字符串，截取出中间的字符串
+		public static java.lang.String FindFirst(java.lang.String Source, java.lang.String Begin, java.lang.String End) {
+			if (Source == null || Begin == null || End == null) {
+				return "";
+			}
+			// 检验
+			int temp = Source.indexOf(Begin);
+			if (temp == -1) {
+				return "";
+			}
+			// 裁剪开始字符串
+			Begin = Source.substring(temp + Begin.length());
+			// 检验
+			temp = Begin.indexOf(End);
+			if (temp == -1) {
+				return "";
+			}
+			// 裁剪结束字符串
+			End = Begin.substring(0, temp);
+			// 返回值
+			return End;
+		}
+		// 搜索最后一个Begin字符串，然后搜索第一个End字符串，截取出中间的字符串
+		public static java.lang.String FindLast(java.lang.String Source, java.lang.String Begin, java.lang.String End) {
+			if (Source == null || Begin == null || End == null) {
+				return "";
+			}
+			// 检验
+			int temp = Source.lastIndexOf(Begin);
+			if (temp == -1) {
+				return "";
+			}
+			// 裁剪开始字符串
+			Begin = Source.substring(temp + Begin.length());
+			// 检验
+			temp = Begin.indexOf(End);
+			if (temp == -1) {
+				return "";
+			}
+			// 裁剪结束字符串
+			End = Begin.substring(0, temp);
+			// 返回值
+			return End;
+		}
+		// 搜索第一个Begin字符串，然后搜索最后一个End字符串，截取出中间的字符串
+		public static java.lang.String FindMiddle(java.lang.String Source, java.lang.String Begin, java.lang.String End) {
+			if (Source == null || Begin == null || End == null) {
+				return "";
+			}
+			// 检验
+			int temp = Source.indexOf(Begin);
+			if (temp == -1) {
+				return "";
+			}
+			// 裁剪开始字符串
+			Begin = Source.substring(temp + Begin.length());
+			// 检验
+			temp = Begin.lastIndexOf(End);
+			if (temp == -1) {
+				return "";
+			}
+			// 裁剪结束字符串
+			End = Begin.substring(0, temp);
+			// 返回值
+			return End;
+		}
+		// 依次搜索Begin字符串和End字符串，然后依次截取出中间的字符串，返回字符串数组
+		public static java.lang.String[] FindArray(java.lang.String Source, java.lang.String Begin, java.lang.String End) {
+			java.util.ArrayList<java.lang.String> tempArrayList = new java.util.ArrayList<java.lang.String>();
+			if (Source == null || Begin == null || End == null) {
+				return new java.lang.String[0];
+			}
+			// 字符串复制
+			java.lang.String SourceString = new java.lang.String(Source);
+			// 检验
+			int index = SourceString.indexOf(Begin);
+			while (index != -1) {
+				// 裁剪开始字符串
+				SourceString = SourceString.substring(index + Begin.length());
+				// 检验
+				index = SourceString.indexOf(End);
+				if (index != -1) {
+					// 裁剪结束字符串
+					tempArrayList.add(SourceString.substring(0, index));
+				}
+				SourceString = SourceString.substring(index + End.length());
+				index = SourceString.indexOf(Begin);
+			}
+			return FromArrayList(tempArrayList);
+		}
+		public static java.util.ArrayList<java.lang.String> FindArrayList(java.lang.String Source, java.lang.String Begin, java.lang.String End) {
+			java.util.ArrayList<java.lang.String> tempArrayList = new java.util.ArrayList<java.lang.String>();
+			if (Source == null || Begin == null || End == null) {
+				return tempArrayList;
+			}
+			// 字符串复制
+			java.lang.String SourceString = new java.lang.String(Source);
+			// 检验
+			int index = SourceString.indexOf(Begin);
+			while (index != -1) {
+				// 裁剪开始字符串
+				SourceString = SourceString.substring(index + Begin.length());
+				// 检验
+				index = SourceString.indexOf(End);
+				if (index != -1) {
+					// 裁剪结束字符串
+					tempArrayList.add(SourceString.substring(0, index));
+				}
+				SourceString = SourceString.substring(index + End.length());
+				index = SourceString.indexOf(Begin);
+			}
+			return tempArrayList;
+		}
 	}
 	// 记录信息到LogCat
 	public static class LogCat {
 		public static void LogVerbose(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.util.Log.v("类型：String，长度：" + Message.length(), Message);
 		}
 		public static void LogDebug(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.util.Log.d("类型：String，长度：" + Message.length(), Message);
 		}
 		public static void LogError(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.util.Log.e("类型：String，长度：" + Message.length(), Message);
 		}
 		public static void LogInfo(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.util.Log.i("类型：String，长度：" + Message.length(), Message);
 		}
 		public static void LogWarn(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.util.Log.w("类型：String，长度：" + Message.length(), Message);
 		}
 		public static void Log(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.util.Log.v("类型：String，长度：" + Message.length(), Message);
 		}
 		public static void Log(int Message) {
@@ -147,6 +315,9 @@ public class My {
 			MainActivity.sendBroadcast(NewShortCut);
 		}
 		public static void Create(java.lang.String ShortCutName, int ImageResourceId) {
+			if (ShortCutName == "") {
+				ShortCutName = "";
+			}
 			android.content.Intent NewShortCut = new android.content.Intent("com.android.launcher.action.INSTALL_SHORTCUT");
 			NewShortCut.putExtra("duplicate", false);
 			android.content.Intent.ShortcutIconResource iconRes = android.content.Intent.ShortcutIconResource.fromContext(MainActivity, ImageResourceId);
@@ -169,6 +340,9 @@ public class My {
 			MainActivity.sendBroadcast(NewShortCut);
 		}
 		public static void CreateDuplicate(java.lang.String ShortCutName, int ImageResourceId) {
+			if (ShortCutName == "") {
+				ShortCutName = "";
+			}
 			android.content.Intent NewShortCut = new android.content.Intent("com.android.launcher.action.INSTALL_SHORTCUT");
 			NewShortCut.putExtra("duplicate", true);
 			android.content.Intent.ShortcutIconResource iconRes = android.content.Intent.ShortcutIconResource.fromContext(MainActivity, ImageResourceId);
@@ -194,6 +368,9 @@ public class My {
 			MainActivity.sendBroadcast(shortcut);
 		}
 		public static void Delete(java.lang.String ShortCutName, int ImageResourceId) {
+			if (ShortCutName == "") {
+				ShortCutName = "";
+			}
 			// 需要权限：
 			// <uses-permission
 			// android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
@@ -211,10 +388,22 @@ public class My {
 	// Toast输出信息
 	public static class Toast {
 		public static void Show(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.widget.Toast.makeText(MainActivity.getApplicationContext(), Message.toString(), android.widget.Toast.LENGTH_SHORT).show();
 		}
 		public static void Show(java.lang.String[] Message) {
 			android.widget.Toast.makeText(MainActivity.getApplicationContext(), String.FromArray(Message), android.widget.Toast.LENGTH_SHORT).show();
+		}
+		public static void Show(java.lang.String[] Message, java.lang.String Parameter) {
+			android.widget.Toast.makeText(MainActivity.getApplicationContext(), String.FromArray(Message, Parameter), android.widget.Toast.LENGTH_SHORT).show();
+		}
+		public static void Show(java.util.ArrayList<java.lang.String> Message) {
+			android.widget.Toast.makeText(MainActivity.getApplicationContext(), String.FromArray(Message), android.widget.Toast.LENGTH_SHORT).show();
+		}
+		public static void Show(java.util.ArrayList<java.lang.String> Message, java.lang.String Parameter) {
+			android.widget.Toast.makeText(MainActivity.getApplicationContext(), String.FromArray(Message, Parameter), android.widget.Toast.LENGTH_SHORT).show();
 		}
 		public static void Show(Object Message) {
 			android.widget.Toast.makeText(MainActivity.getApplicationContext(), Message.toString(), android.widget.Toast.LENGTH_SHORT).show();
@@ -226,6 +415,9 @@ public class My {
 			Show(java.lang.String.valueOf(Message));
 		}
 		public static void ShowCenter(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.widget.Toast toast = android.widget.Toast.makeText(MainActivity.getApplicationContext(), Message, android.widget.Toast.LENGTH_SHORT);
 			toast.setGravity(android.view.Gravity.CENTER, 0, 0);
 			toast.show();
@@ -237,6 +429,9 @@ public class My {
 			ShowCenter(java.lang.String.valueOf(Message));
 		}
 		public static void ShowBottom(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.widget.Toast toast = android.widget.Toast.makeText(MainActivity.getApplicationContext(), Message, android.widget.Toast.LENGTH_SHORT);
 			toast.setGravity(android.view.Gravity.BOTTOM, 0, 0);
 			toast.show();
@@ -248,6 +443,9 @@ public class My {
 			ShowBottom(java.lang.String.valueOf(Message));
 		}
 		public static void ShowTop(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.widget.Toast toast = android.widget.Toast.makeText(MainActivity.getApplicationContext(), Message, android.widget.Toast.LENGTH_SHORT);
 			toast.setGravity(android.view.Gravity.TOP, 0, 0);
 			toast.show();
@@ -259,6 +457,9 @@ public class My {
 			ShowTop(java.lang.String.valueOf(Message));
 		}
 		public static void Show(java.lang.String Message, int ImageResourceId) {
+			if (Message == "") {
+				Message = "null";
+			}
 			android.widget.Toast toast = android.widget.Toast.makeText(MainActivity.getApplicationContext(), Message, android.widget.Toast.LENGTH_LONG);
 			toast.setGravity(android.view.Gravity.CENTER, 0, 0);
 			android.widget.LinearLayout toastView = (android.widget.LinearLayout) toast.getView();
@@ -275,6 +476,9 @@ public class My {
 			Show(java.lang.String.valueOf(Message), ImageResourceId);
 		}
 		public static void Show(java.lang.String Message, int ImageResourceId, java.lang.String Title) {
+			if (Message == "") {
+				Message = "null";
+			}
 			// Toast区域大小由Message文字长度决定，Title可能会被截断。
 			android.widget.Toast toast = android.widget.Toast.makeText(MainActivity.getApplicationContext(), Message, android.widget.Toast.LENGTH_LONG);
 			toast.setGravity(android.view.Gravity.CENTER, 0, 0);
@@ -290,9 +494,15 @@ public class My {
 			toast.show();
 		}
 		public static void Show(java.lang.String Message, int ImageResourceId, int Title) {
+			if (Message == "") {
+				Message = "null";
+			}
 			Show(Message, ImageResourceId, java.lang.String.valueOf(Title));
 		}
 		public static void Show(java.lang.String Message, int ImageResourceId, Boolean Title) {
+			if (Message == "") {
+				Message = "null";
+			}
 			Show(Message, ImageResourceId, java.lang.String.valueOf(Title));
 		}
 	}
@@ -307,24 +517,36 @@ public class My {
 		public static int IconImageResourceId_dialer = android.R.drawable.ic_dialog_dialer;
 		public static int IconImageResourceId_map = android.R.drawable.ic_dialog_map;
 		public static android.app.AlertDialog.Builder New(java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			return new android.app.AlertDialog.Builder(My.MainActivity).setMessage(Message);
 		}
 		public static android.app.AlertDialog.Builder New(Object Message) {
 			return new android.app.AlertDialog.Builder(My.MainActivity).setMessage(Message.toString());
 		}
 		public static android.app.AlertDialog.Builder New(java.lang.String Title, java.lang.String Message) {
+			if (Message == "") {
+				Message = "null";
+			}
 			return new android.app.AlertDialog.Builder(My.MainActivity).setTitle(Title).setMessage(Message);
 		}
 		public static android.app.AlertDialog.Builder New(int IconImageResourceId, java.lang.String Title, java.lang.String Message) {
 			return new android.app.AlertDialog.Builder(My.MainActivity).setIcon(IconImageResourceId).setTitle(Title).setMessage(Message);
 		}
 		public static android.app.AlertDialog.Builder New(java.lang.String Title, java.lang.String Message, java.lang.String PositiveButton) {
+			if (Message == "") {
+				Message = "null";
+			}
 			return new android.app.AlertDialog.Builder(My.MainActivity).setTitle(Title).setMessage(Message).setPositiveButton(PositiveButton, My.MainActivity);
 		}
 		public static android.app.AlertDialog.Builder New(int IconImageResourceId, java.lang.String Title, java.lang.String Message, java.lang.String PositiveButton) {
 			return new android.app.AlertDialog.Builder(My.MainActivity).setIcon(IconImageResourceId).setTitle(Title).setMessage(Message).setPositiveButton(PositiveButton, My.MainActivity);
 		}
 		public static android.app.AlertDialog.Builder New(java.lang.String Title, java.lang.String Message, java.lang.String PositiveButton, java.lang.String NegativeButton) {
+			if (Message == "") {
+				Message = "null";
+			}
 			return new android.app.AlertDialog.Builder(My.MainActivity).setTitle(Title).setMessage(Message).setPositiveButton(PositiveButton, My.MainActivity).setNegativeButton(NegativeButton, My.MainActivity);
 		}
 		public static android.app.AlertDialog.Builder New(int IconImageResourceId, java.lang.String Title, java.lang.String Message, java.lang.String PositiveButton, java.lang.String NegativeButton) {
@@ -2911,16 +3133,8 @@ public class My {
 		// B.Add("123","789");
 		// B.Add("120","111");
 		// B.Add("123","000");
-		//
-		// My.Class.Json C = new My.Class.Json(new My.Class.Json(A));
-		// My.Class.Json D = new My.Class.Json(B);
-		//
 		// My.Toast.Show(A.IsKeyAndValueUnique());
 		// My.Toast.Show(B.IsKeyUnique());
-		// My.Toast.Show(A.ToJson().JsonString());
-		// My.Toast.Show(B.ToJsonString());
-		// My.Toast.Show(C.JsonString());
-		// My.Toast.Show(D.JsonString());
 		//
 		// KeyValue键值动态数组
 		public static class KeyValue {
@@ -3341,7 +3555,7 @@ public class My {
 			}
 			public boolean DeleteFirstValue(java.lang.String ValueString) {
 				try {
-					int index =Value.indexOf(ValueString);
+					int index = Value.indexOf(ValueString);
 					Key.remove(index);
 					Value.remove(index);
 					Length = Length - 1;
@@ -3493,7 +3707,7 @@ public class My {
 				SetKeyAndValueUnique(KeyAndValueUnique);
 			}
 			//
-			//转为JSON（重复的键会被靠后的键值替换）
+			// 转为JSON（重复的键会被靠后的键值替换）
 			public Json ToJson() {
 				return new Json(this);
 			}
@@ -3503,13 +3717,21 @@ public class My {
 					try {
 						Object.put(GetKey(i), GetValue(i));
 					}
-					catch (JSONException e) {
+					catch (org.json.JSONException e) {
 						e.printStackTrace();
 					}
 				}
 				return Object.toString();
 			}
 		}
+		// /*【 示例用法】*/
+		// My.Toast.Show(A.ToJson().JsonString());
+		// My.Toast.Show(B.ToJsonString());
+		// My.Class.Json C = new My.Class.Json(new My.Class.Json(A));
+		// My.Class.Json D = new My.Class.Json(B);
+		// My.Toast.Show(C.JsonString());
+		// My.Toast.Show(D.JsonString());
+		//
 		// JSON递归解析对象
 		public static class Json {
 			public org.json.JSONArray Array = new org.json.JSONArray();;
@@ -3531,7 +3753,7 @@ public class My {
 				catch (org.json.JSONException e) {
 					// e.printStackTrace();
 				}
-			}		 
+			}
 			public Json(Json JsonInstance) {
 				try {
 					Object = new org.json.JSONObject(JsonInstance.JsonString());
@@ -3556,12 +3778,12 @@ public class My {
 					try {
 						Object.put(KeyValueInstance.GetKey(i), KeyValueInstance.GetValue(i));
 					}
-					catch (JSONException e) {
+					catch (org.json.JSONException e) {
 						e.printStackTrace();
 					}
 				}
 			}
-			//取子对象
+			// 取子对象
 			public Json Get(int index) {
 				Json temp = new Json();
 				if (Array != null) {
@@ -4158,6 +4380,328 @@ public class My {
 					return false;
 				}
 				return true;
+			}
+		}
+		// /*【 示例用法】*/
+		// My.Class.KeyValue A = new My.Class.KeyValue("123","456");
+		// A.SetKeyUnique(true);
+		// A.Add("120","120");
+		// My.Class.XML X = new
+		// My.Class.XML("<?xml version=\"1.0\" encoding=\"UTF-8\"?><XML><Node>这是节点1</Node><Node>这是节点2<node>这是节点3</node></Node></XML>");
+		// My.Toast.Show("Declaration："+A.Declaration);
+		// My.Toast.Show("NodeName："+A.NodeName);
+		// My.Toast.Show("NodeBody："+A.InnerString);
+		// My.Toast.Show("XMLString："+A.XMLString());
+		// My.Toast.Show("GetChildren.length："+A.GetChildren("Node").length);
+		// My.Toast.Show("GetFirstChild.XMLString："+A.GetFirstChild("Node").XMLString());
+		// My.Toast.Show("GetLastChild.InnerString："+A.GetLastChild("Node").InnerBody);
+		// My.LogCat.Log("GetChildren(Node)[1].GetLastChild(node).XMLString()："+X.GetChildren("Node")[1].GetLastChild("node").XMLString());
+		// My.LogCat.Log("GetChildren(Node)[1].GetLastChild(node).Clone().InnerBody："+X.GetChildren("Node")[1].GetLastChild("node").Clone().InnerBody);
+		// My.LogCat.Log("new My.Class.XML().XMLString()："+ new
+		// My.Class.XML().XMLString() );
+		// My.LogCat.Log("new My.Class.XML(null,ROOT,null).XMLString()："+
+		// My.Class.XML.Create("ROOT").XMLString() );
+		// My.LogCat.Log("new My.Class.XML(null,ABC,123).XMLString()："+
+		// My.Class.XML.Create("ABC","123").XMLString() );
+		// My.LogCat.Log("(new My.Class.XML(null,ROOT,null)).AddChild(new My.Class.XML(null,ABC,123)).XMLString()："+My.Class.XML.Create("ROOT").AddChild("ABC","123").XMLString());
+		// My.LogCat.Log("A："+My.Class.XML.Create("root",A).XMLString());
+		// My.Class.XML B = new My.Class.XML();
+		// B = B.SetNodeName("HTML");
+		// B.ReallyAddChild("Head","这是头部");
+		// B.ReallyAddChild("Body","这是正文");
+		// My.LogCat.Log("B："+B.XMLString());
+		// My.LogCat.Log("Y："+My.Class.XML.Create("root",new
+		// My.Class.KeyValue()).XMLString());
+		//
+		// XML递归解析对象
+		public static class XML {
+			// 成员
+			// <?xml?>
+			// <?xml version="1.0"?>
+			// <?xml version="1.0" encoding="utf-8"?>
+			public java.lang.String Declaration;// 声明
+			public java.lang.String NodeName;// 节点名称
+			public java.lang.String InnerBody;// 节点内容
+			// 构造函数
+			public XML() {
+				Declaration = "";
+				NodeName = "";
+				InnerBody = "";
+			}
+			public XML(java.lang.String XMLString) {
+				if (XMLString != null) {
+					if (XMLString.startsWith("<?") && XMLString.contains("?>")) {
+						Declaration = "<?" + My.String.FindFirst(XMLString, "<?", "?>").trim() + "?>";
+					}
+					else {
+						Declaration = "";
+					}
+					java.lang.String tempString = XMLString.replace(Declaration, "").trim();
+					if (tempString.startsWith("<") && tempString.endsWith(">")) {
+						NodeName = My.String.FindFirst(tempString, "<", ">").trim();
+					}
+					else {
+						NodeName = "";
+					}
+					InnerBody = My.String.FindMiddle(tempString, "<" + NodeName + ">", "</" + NodeName + ">").trim();
+				}
+				else {
+					Declaration = "";
+					NodeName = "";
+					InnerBody = "";
+				}
+			}
+			public XML(java.lang.String XMLString, java.lang.String DeclarationString) {
+				if (XMLString != null) {
+					// 强制设定XML声明
+					if (DeclarationString != null && DeclarationString.startsWith("<?") && DeclarationString.contains("?>")) {
+						Declaration = "<?" + My.String.FindFirst(DeclarationString, "<?", "?>").trim() + "?>";
+					}
+					else {
+						Declaration = "";
+					}
+					java.lang.String tempString = XMLString.replace(Declaration, "").trim();
+					if (tempString.startsWith("<") && tempString.endsWith(">")) {
+						NodeName = My.String.FindFirst(tempString, "<", ">").trim();
+					}
+					else {
+						NodeName = "";
+					}
+					InnerBody = My.String.FindMiddle(tempString, "<" + NodeName + ">", "</" + NodeName + ">").trim();
+				}
+				else {
+					Declaration = "";
+					NodeName = "";
+					InnerBody = "";
+				}
+			}
+			public XML(java.lang.String DeclarationString, java.lang.String NodeNameString, java.lang.String InnerBodyString) {
+				if (DeclarationString == null) {
+					DeclarationString = "";
+				}
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				if (InnerBodyString == null) {
+					InnerBodyString = "";
+				}
+				Declaration = new java.lang.String(DeclarationString);
+				NodeName = new java.lang.String(NodeNameString);
+				InnerBody = new java.lang.String(InnerBodyString);
+			}
+			public XML(java.lang.String DeclarationString, java.lang.String NodeNameString, KeyValue InnerBodyKeyValue) {
+				if (DeclarationString == null) {
+					DeclarationString = "";
+				}
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				if (InnerBodyKeyValue == null) {
+					InnerBodyKeyValue = new KeyValue();
+				}
+				StringBuffer stringBuffer = new StringBuffer();
+				for (int i = 0; i < InnerBodyKeyValue.Length(); i++) {
+					stringBuffer.append(new XML("", InnerBodyKeyValue.GetKey(i), InnerBodyKeyValue.GetValue(i)).XMLString());
+				}
+				Declaration = new java.lang.String(DeclarationString);
+				NodeName = new java.lang.String(NodeNameString);
+				InnerBody = new java.lang.String(stringBuffer.toString());
+			}
+			public XML(XML XMLInstance) {
+				Declaration = new java.lang.String(XMLInstance.Declaration);
+				NodeName = new java.lang.String(XMLInstance.NodeName);
+				InnerBody = new java.lang.String(XMLInstance.InnerBody);
+			}
+			// 创建新XML对象的函数
+			public static XML Create(java.lang.String NodeNameString) {
+				return new XML("", NodeNameString, "");
+			}
+			public static XML Create(java.lang.String NodeNameString, java.lang.String InnerBodyString) {
+				return new XML("", NodeNameString, InnerBodyString);
+			}
+			public static XML Create(java.lang.String NodeNameString, KeyValue InnerBodyKeyValue) {
+				return new XML("", NodeNameString, InnerBodyKeyValue);
+			}
+			// 输出完整的XML字符串
+			// 新建的空白XML转换结果为：<></>
+			public java.lang.String XMLString() {
+				StringBuffer stringBuffer = new StringBuffer();
+				stringBuffer.append(Declaration);
+				stringBuffer.append("<");
+				stringBuffer.append(NodeName);
+				stringBuffer.append(">");
+				stringBuffer.append(InnerBody);
+				stringBuffer.append("</");
+				stringBuffer.append(NodeName);
+				stringBuffer.append(">");
+				return stringBuffer.toString();
+			}
+			// 复制对象
+			public XML Clone() {
+				// return new XML( this );
+				return new XML(Declaration, NodeName, InnerBody);
+			}
+			// 获取节点
+			// 节点区分大小写
+			// 节点不允许有属性，无法获取属性信息
+			// 同层的节点名称可以重复，多层不允许重复（出现多层重名的节点时，会导致被截断的问题）
+			// 无法获取类似<NodeName/>或<NodeName>形式的节点
+			public XML GetFirstChild(java.lang.String ElementName) {
+				if (ElementName == null) {
+					ElementName = "";
+				}
+				return new XML("<" + ElementName + ">" + My.String.FindFirst(InnerBody, "<" + ElementName + ">", "</" + ElementName + ">") + "</" + ElementName + ">", Declaration);
+			}
+			public XML GetLastChild(java.lang.String ElementName) {
+				if (ElementName == null) {
+					ElementName = "";
+				}
+				return new XML("<" + ElementName + ">" + My.String.FindLast(InnerBody, "<" + ElementName + ">", "</" + ElementName + ">") + "</" + ElementName + ">", Declaration);
+			}
+			public XML[] GetChildren(java.lang.String ElementName) {
+				if (ElementName == null) {
+					ElementName = "";
+				}
+				java.util.ArrayList<java.lang.String> StringArrayList = My.String.FindArrayList(InnerBody, "<" + ElementName + ">", "</" + ElementName + ">");
+				XML[] XMLArrayList = new XML[StringArrayList.size()];
+				for (int i = 0; i < StringArrayList.size(); i++) {
+					XMLArrayList[i] = new XML("<" + ElementName + ">" + StringArrayList.get(i) + "</" + ElementName + ">", Declaration);
+				}
+				StringArrayList.clear();
+				return XMLArrayList;
+			}
+			// 添加节点
+			// 注意：只是返回一个添加过的XML，并不是添加到当前这个XML本身
+			public XML AddChildAtFirst(java.lang.String NodeNameString, java.lang.String InnerBodyString) {
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				if (InnerBodyString == null) {
+					InnerBodyString = "";
+				}
+				return AddChildAtFirst(new My.Class.XML("", NodeNameString, InnerBodyString));
+			}
+			public XML AddChild(java.lang.String NodeNameString, java.lang.String InnerBodyString) {
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				if (InnerBodyString == null) {
+					InnerBodyString = "";
+				}
+				return AddChild(new My.Class.XML("", NodeNameString, InnerBodyString));
+			}
+			public XML AddChildAtFirst(java.lang.String NodeString) {
+				if (NodeString == null) {
+					NodeString = "";
+				}
+				return new XML(Declaration, NodeName, NodeString + InnerBody);
+			}
+			public XML AddChild(java.lang.String NodeString) {
+				if (NodeString == null) {
+					NodeString = "";
+				}
+				return new XML(Declaration, NodeName, InnerBody + NodeString);
+			}
+			public XML AddChildAtFirst(XML Node) {
+				return new XML(Declaration, NodeName, Node.XMLString() + InnerBody);
+			}
+			public XML AddChild(XML Node) {
+				return new XML(Declaration, NodeName, InnerBody + Node.XMLString());
+			}
+			// 修改节点
+			// 注意：只是返回一个修改过的XML，并不是修改了当前这个XML本身
+			public XML SetDeclaration(java.lang.String DeclarationString) {
+				if (DeclarationString == null) {
+					DeclarationString = "";
+				}
+				if (DeclarationString.startsWith("<?") && DeclarationString.contains("?>")) {
+					return new XML("<?" + My.String.FindFirst(DeclarationString, "<?", "?>").trim() + "?>", NodeName, InnerBody);
+				}
+				else {
+					return new XML("", NodeName, InnerBody);
+				}
+			}
+			public XML SetNodeName(java.lang.String NodeNameString) {
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				return new XML(Declaration, NodeNameString, InnerBody);
+			}
+			public XML SetInnerBody(java.lang.String InnerBodyString) {
+				if (InnerBodyString == null) {
+					InnerBodyString = "";
+				}
+				return new XML(Declaration, NodeName, InnerBodyString);
+			}
+			// 真实操作的函数
+			// 修改当前这个XML本身
+			public XML ReallySetDeclaration(java.lang.String DeclarationString) {
+				if (DeclarationString == null) {
+					DeclarationString = "";
+				}
+				if (DeclarationString.startsWith("<?") && DeclarationString.contains("?>")) {
+					Declaration = "<?" + My.String.FindFirst(DeclarationString, "<?", "?>").trim() + "?>";
+				}
+				else {
+					Declaration = "";
+				}
+				return this;
+			}
+			public XML ReallySetNodeName(java.lang.String NodeNameString) {
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				NodeName = NodeNameString;
+				return this;
+			}
+			public XML ReallySetInnerBody(java.lang.String InnerBodyString) {
+				if (InnerBodyString == null) {
+					InnerBodyString = "";
+				}
+				InnerBody = InnerBodyString;
+				return this;
+			}
+			public XML ReallyAddChildAtFirst(java.lang.String NodeNameString, java.lang.String InnerBodyString) {
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				if (InnerBodyString == null) {
+					InnerBodyString = "";
+				}
+				ReallyAddChildAtFirst(new My.Class.XML("", NodeNameString, InnerBodyString));
+				return this;
+			}
+			public XML ReallyAddChild(java.lang.String NodeNameString, java.lang.String InnerBodyString) {
+				if (NodeNameString == null) {
+					NodeNameString = "";
+				}
+				if (InnerBodyString == null) {
+					InnerBodyString = "";
+				}
+				ReallyAddChildAtFirst(new My.Class.XML("", NodeNameString, InnerBodyString));
+				return this;
+			}
+			public XML ReallyAddChildAtFirst(java.lang.String NodeString) {
+				if (NodeString == null) {
+					NodeString = "";
+				}
+				InnerBody = NodeString + InnerBody;
+				return this;
+			}
+			public XML ReallyAddChild(java.lang.String NodeString) {
+				if (NodeString == null) {
+					NodeString = "";
+				}
+				InnerBody = InnerBody + NodeString;
+				return this;
+			}
+			public XML ReallyAddChildAtFirst(XML Node) {
+				InnerBody = Node.XMLString() + InnerBody;
+				return this;
+			}
+			public XML ReallyAddChild(XML Node) {
+				InnerBody = InnerBody + Node.XMLString();
+				return this;
 			}
 		}
 	}
@@ -5182,7 +5726,7 @@ public class My {
 	// UI定时器操作
 	public static class Timer {
 		// FixedTimerTask的执行频率是固定的（UI线程操作）
-		public static class FixedTimerTask implements Runnable {
+		public static abstract class FixedTimerTask implements Runnable {
 			private FixedTimerTask Me;
 			public java.util.Timer Timer;
 			public java.util.TimerTask Task;
@@ -5215,10 +5759,10 @@ public class My {
 			}
 			// 需要实现的接口
 			@Override
-			public void run() {}
+			public abstract void run();
 		}
 		// IntervalTimerTask的执行间隔时间是固定的（UI线程操作）
-		public static class IntervalTimerTask implements Runnable {
+		public static abstract class IntervalTimerTask implements Runnable {
 			private IntervalTimerTask Me;
 			public java.util.Timer Timer;
 			public java.util.TimerTask Task;
@@ -5250,11 +5794,10 @@ public class My {
 				Me = null;
 			}
 			// 需要实现的接口
-			@Override
-			public void run() {}
+			public abstract void run();
 		}
 		// NewRunnable在UI线程（可延时）进行一次性操作
-		public static class NewUIRunnable implements Runnable {
+		public static abstract class NewUIRunnable implements Runnable {
 			private Runnable Me;
 			public NewUIRunnable() {
 				Me = this;
@@ -5276,7 +5819,33 @@ public class My {
 			}
 			// 需要实现的接口
 			@Override
-			public void run() {}
+			public abstract void run();
+		}
+		// NewRunnable在UI线程（可延时）进行一次性操作
+		public static abstract class NewThreadRunnable implements Runnable {
+			private Thread Me;
+			public NewThreadRunnable() {
+				Me = new Thread(this);
+				Me.start();
+			}
+			public NewThreadRunnable(final long DelayMs) {
+				Me = new Thread(this);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(DelayMs);
+						}
+						catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Me.start();
+					}
+				}).start();
+			}
+			// 需要实现的接口
+			@Override
+			public abstract void run();
 		}
 	}
 	// 通知栏操作
