@@ -277,6 +277,16 @@ public class My {
 			}
 			android.util.Log.v("类型：String，长度：" + Message.length(), Message);
 		}
+		@android.annotation.SuppressLint("NewApi")
+		public static void Log(android.graphics.Bitmap Message) {
+			if (My.Device.SDK() >= 12) {
+				// getByteCount() requires API level 12
+				android.util.Log.v("类型：Bitmap", Message.toString() + "内存占用：" + Message.getByteCount() + "高度：" + Message.getWidth() + "宽度：" + Message.getHeight());
+			}
+			else {
+				android.util.Log.v("类型：Bitmap", Message.toString() + "高度：" + Message.getWidth() + "宽度：" + Message.getHeight());
+			}
+		}
 		public static void Log(int Message) {
 			android.util.Log.v("类型：int", java.lang.String.valueOf(Message));
 		}
@@ -5187,7 +5197,7 @@ public class My {
 			}
 			return false;
 		}
-		public static boolean WriteFile(java.lang.String fileName, byte[] bytes) {// 写入文件
+		public static boolean WriteFile(java.lang.String fileName, byte[] bytes) {// 写入文件（重载）
 			// 文件路径和已有文件夹路径相同时会抛出异常。
 			try {
 				java.io.File file = new java.io.File(fileName);
@@ -5221,6 +5231,23 @@ public class My {
 			}
 			return res;
 		}
+		public static java.lang.String ReadLine(java.lang.String fileName) {// 读取文件（只读第一行）
+			java.lang.StringBuffer res = new java.lang.StringBuffer("");
+			try {
+				java.io.InputStreamReader in = new java.io.InputStreamReader(new java.io.FileInputStream(fileName), "UTF-8");
+				java.io.BufferedReader buffer = new java.io.BufferedReader(in);
+				java.lang.String inputLine = null;
+				if ((inputLine = buffer.readLine()) != null) {
+					res.append(inputLine);
+				}
+				buffer.close();
+				in.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return res.toString();
+		}
 		public static java.lang.String ReadFile(java.lang.String fileName) {// 读取文件
 			java.lang.StringBuffer res = new java.lang.StringBuffer("");
 			try {
@@ -5239,23 +5266,87 @@ public class My {
 			}
 			return res.toString();
 		}
-		public static java.lang.String ReadLine(java.lang.String fileName) {// 读取文件
-			java.lang.StringBuffer res = new java.lang.StringBuffer("");
+		public static android.graphics.Bitmap ReadImage(java.lang.String fileName) {// 读取图片文件
+			android.graphics.Bitmap ResultImage = null;
 			try {
-				java.io.InputStreamReader in = new java.io.InputStreamReader(new java.io.FileInputStream(fileName), "UTF-8");
-				java.io.BufferedReader buffer = new java.io.BufferedReader(in);
-				java.lang.String inputLine = null;
-				if ((inputLine = buffer.readLine()) != null)// 使用循环来读取获得的数据
-				{
-					res.append(inputLine);
-				}
-				buffer.close();
+				java.io.InputStream in = new java.io.FileInputStream(fileName);
+				ResultImage = android.graphics.BitmapFactory.decodeStream(in);
 				in.close();
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			return res.toString();
+			return ResultImage;
+		}
+		public static android.graphics.Bitmap ReadImage(java.lang.String fileName, android.graphics.BitmapFactory.Options options) {// 读取图片文件（含参数）
+			android.graphics.Bitmap ResultImage = null;
+			try {
+				java.io.InputStream in = new java.io.FileInputStream(fileName);
+				ResultImage = android.graphics.BitmapFactory.decodeStream(in, null, options);
+				in.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return ResultImage;
+		}
+		public static android.graphics.Bitmap ReadImageLowQuality(java.lang.String fileName) {// 读取图片文件（低质量）
+			android.graphics.Bitmap ResultImage = null;
+			try {
+				android.graphics.BitmapFactory.Options options = new android.graphics.BitmapFactory.Options();
+				// options.inSampleSize = 2;//长宽像素都减半
+				// options.inPreferredConfig =
+				// android.graphics.Bitmap.Config.ARGB_4444;//透明图降低质量
+				options.inPreferredConfig = android.graphics.Bitmap.Config.RGB_565;// 非透明的图降低质量
+				java.io.InputStream in = new java.io.FileInputStream(fileName);
+				ResultImage = android.graphics.BitmapFactory.decodeStream(in, null, options);
+				in.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return ResultImage;
+		}
+		public static android.graphics.Bitmap ReadResourceImage(int ResourceId) {// 读取图片文件
+			android.graphics.Bitmap ResultImage = null;
+			try {
+				java.io.InputStream in = MainActivity.getResources().openRawResource(ResourceId);
+				ResultImage = android.graphics.BitmapFactory.decodeStream(in);
+				in.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return ResultImage;
+		}
+		public static android.graphics.Bitmap ReadResourceImage(int ResourceId, android.graphics.BitmapFactory.Options options) {// 读取图片文件（含参数）
+			android.graphics.Bitmap ResultImage = null;
+			try {
+				java.io.InputStream in = MainActivity.getResources().openRawResource(ResourceId);
+				ResultImage = android.graphics.BitmapFactory.decodeStream(in, null, options);
+				in.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return ResultImage;
+		}
+		public static android.graphics.Bitmap ReadResourceImageLowQuality(int ResourceId) {// 读取图片文件（低质量）
+			android.graphics.Bitmap ResultImage = null;
+			try {
+				android.graphics.BitmapFactory.Options options = new android.graphics.BitmapFactory.Options();
+				// options.inSampleSize = 2;//长宽像素都减半
+				// options.inPreferredConfig =
+				// android.graphics.Bitmap.Config.ARGB_4444;//透明图降低质量
+				options.inPreferredConfig = android.graphics.Bitmap.Config.RGB_565;// 非透明的图降低质量
+				java.io.InputStream in = MainActivity.getResources().openRawResource(ResourceId);
+				ResultImage = android.graphics.BitmapFactory.decodeStream(in, null, options);
+				in.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return ResultImage;
 		}
 		// 手机ROM信息
 		public static class Rom {
@@ -6182,6 +6273,133 @@ public class My {
 			.setTicker(TickerMessage)// 提示文本
 			;
 			NM.notify(7, NCB.build());
+		}
+	}
+	// 图片裁剪操作
+	public static class Image {
+		// /*【 示例用法】*/
+		// Bitmap aBitmap = My.IO.ReadResourceImage(R.drawable.a1);//1537600
+		// My.LogCat.Log(aBitmap);//768800
+		// aBitmap = My.IO.ReadResourceImageLowQuality(R.drawable.a1);
+		// My.LogCat.Log(aBitmap);//768800
+		// Bitmap bitmap;
+		// bitmap = My.Image.CutCenter(aBitmap, 300, 400);
+		// My.LogCat.Log(bitmap);//480K
+		// bitmap = My.Image.CutCenterLowQuality(aBitmap, 300, 400);
+		// My.LogCat.Log(bitmap);//240K
+		// bitmap = My.Image.FitSize(aBitmap, 300, 400);
+		// My.LogCat.Log(bitmap);//360K
+		// bitmap = My.Image.FitSizeLowQuality(aBitmap, 300, 400);
+		// My.LogCat.Log(bitmap);//180K
+		// rootView.setBackgroundDrawable(new BitmapDrawable(bitmap));
+		//
+		// 裁剪图片（图片大小已确定，不拉伸变形，尽量取出最大范围的原图）
+		public static android.graphics.Bitmap CutCenter(android.graphics.Bitmap SourceBitmap, int Width, int Height) {
+			// 原始图大小
+			int SourceHeight = SourceBitmap.getHeight();
+			int SourceWidth = SourceBitmap.getWidth();
+			// 图片高宽比率
+			float SourceRatio = (float) SourceHeight / (float) SourceWidth;
+			float Ratio = (float) Height / (float) Width;
+			// 裁剪范围
+			android.graphics.Rect srcRect;
+			android.graphics.Rect dstRect = new android.graphics.Rect(0, 0, Width, Height);
+			// 原始图较高（以宽度为限制，尽量取出最高）
+			if (SourceRatio > Ratio) {
+				final int srcRectHeight = (int) (SourceWidth * Ratio); // 高度
+				final int scrRectTop = (int) (SourceHeight - srcRectHeight) / 2; // 上边距
+				srcRect = new android.graphics.Rect(0, scrRectTop, SourceWidth, scrRectTop + srcRectHeight);
+			}
+			// 原始图较宽（以高度为限制，尽量取出最宽）
+			else {
+				final int srcRectWidth = (int) (SourceHeight / Ratio); // 宽度
+				final int srcRectLeft = (int) (SourceWidth - srcRectWidth) / 2; // 左边距
+				srcRect = new android.graphics.Rect(srcRectLeft, 0, srcRectLeft + srcRectWidth, SourceHeight); // 左边距，上边距，宽度，高度
+			}
+			// 生成图片
+			android.graphics.Bitmap TargetBitmap = android.graphics.Bitmap.createBitmap(Width, Height, android.graphics.Bitmap.Config.ARGB_8888);// 最佳质量
+			android.graphics.Canvas canvas = new android.graphics.Canvas(TargetBitmap);// 创建画布
+			canvas.drawBitmap(SourceBitmap, srcRect, dstRect, new android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG | android.graphics.Paint.ANTI_ALIAS_FLAG));// 抗锯齿
+			return TargetBitmap;
+		}
+		// 重载：裁剪图片并降低质量
+		public static android.graphics.Bitmap CutCenterLowQuality(android.graphics.Bitmap SourceBitmap, int Width, int Height) {
+			// 原始图大小
+			int SourceHeight = SourceBitmap.getHeight();
+			int SourceWidth = SourceBitmap.getWidth();
+			// 图片高宽比率
+			float SourceRatio = (float) SourceHeight / (float) SourceWidth;
+			float Ratio = (float) Height / (float) Width;
+			// 裁剪范围
+			android.graphics.Rect srcRect;
+			android.graphics.Rect dstRect = new android.graphics.Rect(0, 0, Width, Height);
+			// 原始图较高（以宽度为限制，尽量取出最高）
+			if (SourceRatio > Ratio) {
+				final int srcRectHeight = (int) (SourceWidth * Ratio); // 高度
+				final int scrRectTop = (int) (SourceHeight - srcRectHeight) / 2; // 上边距
+				srcRect = new android.graphics.Rect(0, scrRectTop, SourceWidth, scrRectTop + srcRectHeight);
+			}
+			// 原始图较宽（以高度为限制，尽量取出最宽）
+			else {
+				final int srcRectWidth = (int) (SourceHeight / Ratio); // 宽度
+				final int srcRectLeft = (int) (SourceWidth - srcRectWidth) / 2; // 左边距
+				srcRect = new android.graphics.Rect(srcRectLeft, 0, srcRectLeft + srcRectWidth, SourceHeight); // 左边距，上边距，宽度，高度
+			}
+			// 生成图片
+			android.graphics.Bitmap TargetBitmap = android.graphics.Bitmap.createBitmap(Width, Height, android.graphics.Bitmap.Config.RGB_565);// 降低质量
+			android.graphics.Canvas canvas = new android.graphics.Canvas(TargetBitmap);// 创建画布
+			canvas.drawBitmap(SourceBitmap, srcRect, dstRect, null);// 不抗锯齿
+			return TargetBitmap;
+		}
+		// 缩放图片（图片大小已限制，不拉伸变形，原图缩放到最大范围）
+		public static android.graphics.Bitmap FitSize(android.graphics.Bitmap SourceBitmap, int Width, int Height) {
+			// 原始图大小
+			int SourceHeight = SourceBitmap.getHeight();
+			int SourceWidth = SourceBitmap.getWidth();
+			// 图片高宽比率
+			float SourceRatio = (float) SourceHeight / (float) SourceWidth;
+			float Ratio = (float) Height / (float) Width;
+			// 裁剪范围
+			android.graphics.Rect srcRect = new android.graphics.Rect(0, 0, SourceWidth, SourceHeight);
+			android.graphics.Rect dstRect;
+			// 原始图较高（以宽度为限制，尽量取出最高）
+			if (SourceRatio > Ratio) {
+				dstRect = new android.graphics.Rect(0, 0, (int) (Height / SourceRatio), Height);
+			}
+			// 原始图较宽（以高度为限制，尽量取出最宽）
+			else {
+				dstRect = new android.graphics.Rect(0, 0, Width, (int) (Width * SourceRatio)); // 左边距，上边距，宽度，高度
+			}
+			// 生成图片
+			android.graphics.Bitmap TargetBitmap = android.graphics.Bitmap.createBitmap(dstRect.width(), dstRect.height(), android.graphics.Bitmap.Config.ARGB_8888);// 最佳质量
+			android.graphics.Canvas canvas = new android.graphics.Canvas(TargetBitmap);// 创建画布
+			canvas.drawBitmap(SourceBitmap, srcRect, dstRect, new android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG | android.graphics.Paint.ANTI_ALIAS_FLAG));// 抗锯齿
+			return TargetBitmap;
+		}
+		// 重载：缩放图片并降低质量
+		public static android.graphics.Bitmap FitSizeLowQuality(android.graphics.Bitmap SourceBitmap, int Width, int Height) {
+			// 原始图大小
+			int SourceHeight = SourceBitmap.getHeight();
+			int SourceWidth = SourceBitmap.getWidth();
+			// 图片高宽比率
+			float SourceRatio = (float) SourceHeight / (float) SourceWidth;
+			float Ratio = (float) Height / (float) Width;
+			// 裁剪范围
+			android.graphics.Rect srcRect = new android.graphics.Rect(0, 0, SourceWidth, SourceHeight);
+			android.graphics.Rect dstRect;
+			// 原始图较高（以宽度为限制，尽量取出最高）
+			if (SourceRatio > Ratio) {
+				dstRect = new android.graphics.Rect(0, 0, (int) (Height / SourceRatio), Height);
+			}
+			// 原始图较宽（以高度为限制，尽量取出最宽）
+			else {
+				dstRect = new android.graphics.Rect(0, 0, Width, (int) (Width * SourceRatio)); // 左边距，上边距，宽度，高度
+			}
+			// 生成图片
+			android.graphics.Bitmap TargetBitmap = android.graphics.Bitmap.createBitmap(dstRect.width(), dstRect.height(), android.graphics.Bitmap.Config.RGB_565);// 降低质量
+			android.graphics.Canvas canvas = new android.graphics.Canvas(TargetBitmap);// 创建画布
+			canvas.drawBitmap(SourceBitmap, srcRect, dstRect, null);// 不抗锯齿
+			return TargetBitmap;
 		}
 	}
 }

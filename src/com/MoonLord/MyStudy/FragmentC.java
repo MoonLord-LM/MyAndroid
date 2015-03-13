@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.MoonLord.My;
@@ -26,21 +25,11 @@ public class FragmentC extends MyFragment {
 		new My.Timer.NewUIRunnable() {
 			@Override
 			public void run() {
-				WebView webView1 = (WebView) rootView.findViewById(R.id.webView1);
-				webView1.loadUrl("http://yveyi.sinaapp.com");
 				ImageView imageView1 = (ImageView) rootView.findViewById(R.id.imageView1);
 				//My.Camera.GetPhoto(imageView1);
 				My.Camera.GetCropPhoto(imageView1);
 			}
 		};
-		
-		rootView.setBackgroundColor(My.Maths.SmoothChangeLightColor.LastColor);
-		new My.Timer.IntervalTimerTask(20){
-        	@Override
-			public void run() {
-        		rootView.setBackgroundColor(My.Maths.SmoothChangeLightColor.LastColor);
-			}
-        };
         
         return rootView;
         

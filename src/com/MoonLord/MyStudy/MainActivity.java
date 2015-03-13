@@ -11,8 +11,8 @@ import com.MoonLord.MyActivity;
 
 public class MainActivity extends MyActivity{
 
-	LinearLayout MainLayout;
-	Fragment ContentFragment;
+	public LinearLayout MainLayout;
+	public Fragment ContentFragment;
 
 	@Override
 	public void onClick(View v) {
@@ -34,7 +34,7 @@ public class MainActivity extends MyActivity{
         }
     }
 	
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -49,6 +49,7 @@ public class MainActivity extends MyActivity{
             	MainLayout.setBackgroundColor(My.Maths.SmoothChangeLightColor.NewColor());
 			}
         };
+        
         
     }
 }
