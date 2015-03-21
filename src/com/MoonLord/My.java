@@ -661,9 +661,6 @@ public class My {
 					UrlString = UrlString.substring(0, UrlString.indexOf("?") + 1);// 截取出?号和之前的字符
 					UrlString += java.net.URLEncoder.encode(GetParameter, "UTF-8");
 				}
-				else {
-					UrlString = java.net.URLEncoder.encode(UrlString, "UTF-8");
-				}
 			}
 			catch (java.io.UnsupportedEncodingException e) {// 编码不支持
 				e.printStackTrace();
@@ -690,9 +687,6 @@ public class My {
 						PostParameter += "&";
 					}
 					PostParameter = PostParameter.substring(0, PostParameter.length() - 1);// 删除多余的&符号
-				}
-				else {
-					PostParameter = java.net.URLEncoder.encode(PostParameter, "UTF-8");
 				}
 			}
 			catch (java.io.UnsupportedEncodingException e) {// 编码不支持
