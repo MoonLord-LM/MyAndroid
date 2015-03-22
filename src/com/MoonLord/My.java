@@ -5088,11 +5088,11 @@ public class My {
 		}
 		// 绑定子按钮的监听事件
 		public static void BindOnClick(int ViewId) {
-			MainActivity.findViewById(ViewId).setOnClickListener(MainActivity);
+			My.MainActivity.findViewById(ViewId).setOnClickListener(MainActivity);
 		}
 		public static void BindOnClick(int[] ViewId) {
 			for (int i : ViewId) {
-				MainActivity.findViewById(i).setOnClickListener(MainActivity);
+				My.MainActivity.findViewById(i).setOnClickListener(MainActivity);
 			}
 		}
 		// 打开APK文件
@@ -5102,7 +5102,166 @@ public class My {
 			intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.setAction(android.content.Intent.ACTION_VIEW);
 			intent.setDataAndType(android.net.Uri.fromFile(file), "application/vnd.android.package-archive");
-			MainActivity.startActivity(intent);
+			My.MainActivity.startActivity(intent);
+		}
+		// 打开安卓默认桌面
+		public static void ShowHome() {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_MAIN);
+			intent.addCategory(android.content.Intent.CATEGORY_HOME);
+			My.MainActivity.startActivity(intent);
+		}
+		// 打开安卓默认拨号界面
+		public static void ShowDial() {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_DIAL);
+			intent.setData(android.net.Uri.parse("tel:"));
+			My.MainActivity.startActivity(intent);
+		}
+		public static void ShowDial(java.lang.String PhoneNumber) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_DIAL);
+			intent.setData(android.net.Uri.parse("tel:" + PhoneNumber));
+			My.MainActivity.startActivity(intent);
+		}
+		// 打开安卓默认拨号界面，并直接进行拨号通话
+		// 示例：My.Activity.ShowCall("15527155972");
+		// 需要权限：
+		// <uses-permission android:name="android.permission.CALL_PHONE" />
+		public static void ShowCall(java.lang.String PhoneNumber) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_CALL);
+			intent.setData(android.net.Uri.parse("tel:" + PhoneNumber));
+			My.MainActivity.startActivity(intent);
+		}
+		// 打开安卓默认短信界面
+		// SMS：Short Message Service
+		// 可以选择短信发送人
+		public static void ShowSms() {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SENDTO);
+			intent.setData(android.net.Uri.parse("smsto:"));
+			intent.putExtra("sms_body", "");
+			My.MainActivity.startActivity(intent);
+		}
+		public static void ShowSms(java.lang.String PhoneNumber) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SENDTO);
+			intent.setData(android.net.Uri.parse("smsto:" + PhoneNumber));
+			intent.putExtra("sms_body", "");
+			My.MainActivity.startActivity(intent);
+		}
+		public static void ShowSms(java.lang.String PhoneNumber, java.lang.String SmsBody) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SENDTO);
+			intent.setData(android.net.Uri.parse("smsto:" + PhoneNumber));
+			intent.putExtra("sms_body", SmsBody);
+			My.MainActivity.startActivity(intent);
+		}
+		// 打开安卓默认邮件界面
+		// 用户选择正确的邮件发送程序则可以识别所有参数（选择用QQ什么的打开就可能只识别邮件内容）
+		// CarbonCopied 抄送人
+		// 示例：My.Activity.ShowEmail("178910432@qq.com");
+		// 示例：My.Activity.ShowEmail(new
+		// java.lang.String[]{"178910432@qq.com","moonlord@msn.cn"},new
+		// java.lang.String[]{"178910432@qq.com","moonlord@msn.cn"},"邮件标题","邮件内容");
+		public static void ShowEmail(java.lang.String EmailAddress) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SENDTO);
+			intent.setData(android.net.Uri.parse("mailto:" + EmailAddress));
+			My.MainActivity.startActivity(intent);
+		}
+		public static void ShowEmail(java.lang.String EmailAddress, java.lang.String EmailTitle, java.lang.String EmailBody) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(android.content.Intent.EXTRA_EMAIL, EmailAddress);
+			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, EmailTitle);
+			intent.putExtra(android.content.Intent.EXTRA_TEXT, EmailBody);
+			// My.MainActivity.startActivity(android.content.Intent.createChooser(intent,
+			// "Choose Email Client"));
+			My.MainActivity.startActivity(android.content.Intent.createChooser(intent, "选择用来发送邮件的程序"));
+		}
+		public static void ShowEmail(java.lang.String[] EmailAddress, java.lang.String EmailTitle, java.lang.String EmailBody) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(android.content.Intent.EXTRA_EMAIL, EmailAddress);
+			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, EmailTitle);
+			intent.putExtra(android.content.Intent.EXTRA_TEXT, EmailBody);
+			// My.MainActivity.startActivity(android.content.Intent.createChooser(intent,
+			// "Choose Email Client"));
+			My.MainActivity.startActivity(android.content.Intent.createChooser(intent, "选择用来发送邮件的程序"));
+		}
+		public static void ShowEmail(java.lang.String EmailAddress, java.lang.String CarbonCopied, java.lang.String EmailTitle, java.lang.String EmailBody) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(android.content.Intent.EXTRA_EMAIL, EmailAddress);
+			intent.putExtra(android.content.Intent.EXTRA_CC, CarbonCopied);
+			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, EmailTitle);
+			intent.putExtra(android.content.Intent.EXTRA_TEXT, EmailBody);
+			// My.MainActivity.startActivity(android.content.Intent.createChooser(intent,
+			// "Choose Email Client"));
+			My.MainActivity.startActivity(android.content.Intent.createChooser(intent, "选择用来发送邮件的程序"));
+		}
+		public static void ShowEmail(java.lang.String[] EmailAddress, java.lang.String[] CarbonCopied, java.lang.String EmailTitle, java.lang.String EmailBody) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(android.content.Intent.EXTRA_EMAIL, EmailAddress);
+			intent.putExtra(android.content.Intent.EXTRA_CC, CarbonCopied);
+			intent.putExtra(android.content.Intent.EXTRA_SUBJECT, EmailTitle);
+			intent.putExtra(android.content.Intent.EXTRA_TEXT, EmailBody);
+			// My.MainActivity.startActivity(android.content.Intent.createChooser(intent,
+			// "Choose Email Client"));
+			My.MainActivity.startActivity(android.content.Intent.createChooser(intent, "选择用来发送邮件的程序"));
+		}
+		// 打开安卓默认地图界面
+		// 示例：My.Activity.ShowMap(40,116);
+		public static void ShowMap() {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			intent.setData(android.net.Uri.parse("geo:"));
+			My.MainActivity.startActivity(intent);
+		}
+		public static void ShowMap(android.graphics.Point point) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			intent.setData(android.net.Uri.parse("geo:" + point.x + "," + point.y));
+			My.MainActivity.startActivity(intent);
+		}
+		public static void ShowMap(float locationX, float locationY) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			intent.setData(android.net.Uri.parse("geo:" + locationX + "," + locationY));
+			My.MainActivity.startActivity(intent);
+		}
+		// 打开安卓默认网页界面
+		// 示例：My.Activity.ShowUrl("www.baidu.com");
+		public static void ShowUrl(java.lang.String URL) {
+			if (!URL.toLowerCase(java.util.Locale.CHINA).contains("http://")) {
+				URL = "http://" + URL;
+			}
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			intent.setData(android.net.Uri.parse(URL));
+			My.MainActivity.startActivity(intent);
+		}
+		// 打开安卓默认视频播放界面
+		// 示例：My.Activity.ShowVideo("file:///storage/sdcard1/我的视频/Let It Go.mp4");
+		public static void ShowVideo(java.lang.String FilePath) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			intent.setDataAndType(android.net.Uri.parse(FilePath), "video/*");
+			My.MainActivity.startActivity(intent);
+		}
+		// 不经过用户允许，后台静默发送短信（谨慎测试）
+		// 示例：My.Activity.SendSms("15527155972", "MyAndroid框架短信测试");
+		// 需要权限：<uses-permission android:name="android.permission.SEND_SMS" />
+		public static void SendSms(java.lang.String PhoneNumber, java.lang.String SmsBody) {
+			android.telephony.SmsManager manager = android.telephony.SmsManager.getDefault();
+			manager.sendTextMessage(PhoneNumber, null, SmsBody, null, null);
 		}
 	}
 	// IO操作
