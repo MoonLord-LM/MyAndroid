@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.MoonLord.My;
 import com.MoonLord.MyFragment;
+import com.MoonLord.R;
 
 public class FragmentA extends MyFragment {
 	

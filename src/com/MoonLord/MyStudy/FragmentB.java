@@ -1,6 +1,7 @@
 package com.MoonLord.MyStudy;
 
 import android.os.Bundle;
+import com.MoonLord.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,8 @@ public class FragmentB extends MyFragment {
 		new Thread(new Runnable() {
         	@Override
         	public void run() {
-        		final String aString = My.Http.CookieByPost("http://moonlordapi.sinaapp.com/test.php?中文GET&参数=中文233","中文POST=中文233","C中文=V中文; X=Y","http://www.moonlord.cn?参数=123");
+        		//final String aString = My.Http.CookieByPost("http://moonlordapi.sinaapp.com/test.php?中文GET&参数=中文233","中文POST=中文233","C中文=V中文; X=Y","http://www.moonlord.cn?参数=123");
+        		final String aString = My.Http.Get("http://www.baidu.com");
         		My.IO.SDCard.MakeDirectory("123/456");
         		My.IO.SDCard.WriteFile("123/456/123.txt","123/456");
         		//final String a = My.Http.UpLoadSDCard("http://moonlordapi.sinaapp.com/test.php?java.lang.String=中文&参数=中文233","参数1=中文233&参数2=中文233","参数1=中文233&参数2=中文233","参数1=中文233&参数2=中文233", new String[]{"123/456/123.txt","123/456/123.txt","123/456/123.txt"});

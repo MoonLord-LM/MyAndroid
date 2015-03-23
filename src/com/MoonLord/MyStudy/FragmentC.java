@@ -1,6 +1,7 @@
 package com.MoonLord.MyStudy;
 
 import android.os.Bundle;
+import com.MoonLord.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

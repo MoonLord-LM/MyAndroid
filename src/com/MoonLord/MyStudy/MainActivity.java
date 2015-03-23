@@ -1,6 +1,7 @@
 package com.MoonLord.MyStudy;
 
 import android.app.Fragment;
+import com.MoonLord.R;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -49,8 +50,7 @@ public class MainActivity extends MyActivity{
             	MainLayout.setBackgroundColor(My.Maths.SmoothChangeLightColor.NewColor());
 			}
         };
-        
-        
+        //throw new NullPointerException();
     }
 }
 
