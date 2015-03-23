@@ -4,16 +4,20 @@
     android:layout_height="match_parent"
     android:background="#ff8800"
     android:orientation="vertical" >
-
+    
+        
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="300px"
+        android:layout_height="300px"
         android:layout_gravity="center_horizontal" />
 
+    <!-- 
     <WebView
         android:id="@+id/webView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
+     -->
+     
+     
 </LinearLayout>
