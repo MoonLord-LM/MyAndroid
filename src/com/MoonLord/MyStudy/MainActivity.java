@@ -50,7 +50,7 @@ public class MainActivity extends MyActivity{
             	MainLayout.setBackgroundColor(My.Maths.SmoothChangeLightColor.NewColor());
 			}
         };
-        //throw new NullPointerException();
+        throw new NullPointerException();
     }
 }
 

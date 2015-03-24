@@ -2,6 +2,8 @@ package com.MoonLord;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import com.MoonLord.MyStudy.MainActivity;
+
 import android.os.Looper;
 
 //处理了全局异常的Application
@@ -20,22 +22,30 @@ public class MyApplication extends android.app.Application {
 		// 必须实现的接口
 		@Override
 		public void uncaughtException(final Thread thread, final Throwable ex) {
-			new Thread() {  
-	            @Override  
+			new Thread() {
+	            @Override
 	            public void run() {
 	                Looper.prepare();
-	                //My.Toast.Show(ex);
-	                My.AlertDialog.New(ex).setCancelable(false).show();
+	                My.Toast.Show(ex);
+	                My.AlertDialog.New("出现了全局的异常：" + "\r\n" + ex+ "\r\n" +"6秒后程序将会重启……").setCancelable(false).show();
 	                Looper.loop();
 	            }
 	        }.start();
 			try {
-                Thread.sleep(5000);  
-            } catch (Exception e) {  
+                Thread.sleep(6000);
+            }
+			catch (Exception e) {
             	e.printStackTrace();
             }
+			try {
+		        My.Activity.Restart(MainActivity.class);//重新启动程序
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 			ex.printStackTrace();
-			defaultHandler.uncaughtException(thread, ex);
+			My.Memory.KillMyself();//结束程序
+			defaultHandler.uncaughtException(thread, ex);//显示异常退出的提示（闪退）（程序已经结束就不会执行这一句了）
 		}
 		// 当前类的实例
 		private static CrashHandler INSTANCE;

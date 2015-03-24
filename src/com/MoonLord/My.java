@@ -5007,6 +5007,9 @@ public class My {
 		public static void KillMyself() {// 强制结束自身
 			android.os.Process.killProcess(android.os.Process.myPid());
 		}
+		public static void Exit() {// 强制结束自身
+			System.exit(0);
+		}
 		public static MyProcessInfo[] RunningAppProcess() {// 正在运行的进程信息
 			java.util.List<android.app.ActivityManager.RunningAppProcessInfo> RAP = MyActivityManager.getRunningAppProcesses();
 			MyProcessInfo[] info = new MyProcessInfo[RAP.size()];
@@ -5081,6 +5084,22 @@ public class My {
 		public static void Start(java.lang.Class<?> Class, My.Class.KeyValue KeyValue) {
 			android.content.Intent intent = new android.content.Intent();
 			intent.setClass(My.MainActivity, Class);
+			for (int i = 0; i < KeyValue.Length; i++) {
+				intent.putExtra(KeyValue.GetKey(i), KeyValue.GetValue(i));
+			}
+			My.MainActivity.startActivity(intent);
+		}
+		// 重新启动Activity
+		public static void Restart(java.lang.Class<?> Class) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setClass(My.MainActivity, Class);
+			intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+			My.MainActivity.startActivity(intent);
+		}
+		public static void Restart(java.lang.Class<?> Class, My.Class.KeyValue KeyValue) {
+			android.content.Intent intent = new android.content.Intent();
+			intent.setClass(My.MainActivity, Class);
+			intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
 			for (int i = 0; i < KeyValue.Length; i++) {
 				intent.putExtra(KeyValue.GetKey(i), KeyValue.GetValue(i));
 			}
