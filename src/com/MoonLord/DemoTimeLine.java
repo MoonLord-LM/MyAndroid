@@ -64,7 +64,7 @@ public class DemoTimeLine extends Activity {
 			ViewHolder viewHolder = null;
 			if (convertView == null) {
 				LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-				convertView = inflater.inflate(R.layout.time_line_item, (ViewGroup) My.Const.Null);
+				convertView = inflater.inflate(R.layout.time_line_item, (ViewGroup) null);
 				viewHolder = new ViewHolder();
 				viewHolder.title = (TextView) convertView.findViewById(R.id.title);
 				convertView.setTag(viewHolder);

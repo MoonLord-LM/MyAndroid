@@ -3,6 +3,8 @@ package com.MoonLord;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import com.MoonLord.MyStudy.MainActivity;
+import com.MyAndroid.Memory;
+import com.MyAndroid.Toast;
 
 import android.os.Looper;
 
@@ -26,8 +28,8 @@ public class MyApplication extends android.app.Application {
 	            @Override
 	            public void run() {
 	                Looper.prepare();
-	                My.Toast.Show(ex);
-	                My.AlertDialog.New("出现了全局的异常：" + "\r\n" + ex+ "\r\n" +"6秒后程序将会重启……").setCancelable(false).show();
+	                //Toast.Show(My.MainActivity,ex);
+	                //My.AlertDialog.New("出现了全局的异常：" + "\r\n" + ex+ "\r\n" +"6秒后程序将会重启……").setCancelable(false).show();
 	                Looper.loop();
 	            }
 	        }.start();
@@ -38,13 +40,13 @@ public class MyApplication extends android.app.Application {
             	e.printStackTrace();
             }
 			try {
-		        My.Activity.Restart(MainActivity.class);//重新启动程序
+		        //My.Activity.Restart(MainActivity.class);//重新启动程序
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
 			ex.printStackTrace();
-			My.Memory.KillMyself();//结束程序
+			Memory.KillMyself();//结束程序
 			defaultHandler.uncaughtException(thread, ex);//显示异常退出的提示（闪退）（程序已经结束就不会执行这一句了）
 		}
 		// 当前类的实例

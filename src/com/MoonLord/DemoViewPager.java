@@ -1,6 +1,7 @@
 package com.MoonLord;
 
 import com.MoonLord.R;
+import com.MyAndroid.Screen;
 //如果android-support-v4.jar包在LIBS目录下，先将它移除。
 //然后点选中项目右键 --->properties-->JavaBuildPath-->Libraries-->Add External JARs。
 //选择你SDK目录下的\extras\android\compatibility\v4\android-support-v4.jar.点击OK。这样就导入了jar包。
@@ -30,9 +31,9 @@ public class DemoViewPager extends android.app.Activity{
 		MyViewPager=(android.support.v4.view.ViewPager) findViewById(R.id.vPager);
 		views=new java.util.ArrayList<android.view.View>();
 		android.view.LayoutInflater inflater=getLayoutInflater();
-		view1=inflater.inflate(R.layout.view_pager_page1, (android.view.ViewGroup)My.Const.Null);
-		view2=inflater.inflate(R.layout.view_pager_page2, (android.view.ViewGroup)My.Const.Null);
-		view3=inflater.inflate(R.layout.view_pager_page3, (android.view.ViewGroup)My.Const.Null);
+		view1=inflater.inflate(R.layout.view_pager_page1, (android.view.ViewGroup)null);
+		view2=inflater.inflate(R.layout.view_pager_page2, (android.view.ViewGroup)null);
+		view3=inflater.inflate(R.layout.view_pager_page3, (android.view.ViewGroup)null);
 		views.add(view1);
 		views.add(view2);
 		views.add(view3);
@@ -53,7 +54,7 @@ public class DemoViewPager extends android.app.Activity{
 	private void InitImageView() {
 		LineImage= (android.widget.ImageView) findViewById(R.id.line);
 		LineImageWidth = android.graphics.BitmapFactory.decodeResource(getResources(), R.drawable.line).getWidth();// 获取图片宽度
-		offset = (My.Screen.ScreenWidth() / 3 - LineImageWidth) / 2;// 计算偏移量
+		offset = (Screen.Width(this) / 3 - LineImageWidth) / 2;// 计算偏移量
 		android.graphics.Matrix matrix = new android.graphics.Matrix();
 		matrix.postTranslate(offset, 0);
 		LineImage.setImageMatrix(matrix);// 设置横线图片初始位置

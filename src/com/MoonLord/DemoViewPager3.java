@@ -95,7 +95,7 @@ public class DemoViewPager3 extends android.app.Activity {
 			this.data = data;
 			viewList=new java.util.ArrayList<android.view.View>();
 			for (int i = 0; i < getCount(); i++) {
-				View view = activity.getLayoutInflater().inflate(R.layout.view_pager_demo3_grid, (ViewGroup) My.Const.Null);
+				View view = activity.getLayoutInflater().inflate(R.layout.view_pager_demo3_grid, (ViewGroup) null);
 				viewList.add(view);
 			}
 		}
@@ -136,7 +136,7 @@ public class DemoViewPager3 extends android.app.Activity {
 				public View getView(int position, View convertView, ViewGroup parent) {
 					//index为页数，position为页内的序号，都是从0开始。
 					if (convertView == null) {
-						convertView = LayoutInflater.from(activity).inflate(R.layout.view_pager_demo3_item, (ViewGroup) My.Const.Null);
+						convertView = LayoutInflater.from(activity).inflate(R.layout.view_pager_demo3_item, (ViewGroup) null);
 					}
 					ImageView iv = (ImageView) convertView.findViewById(R.id.demo_image);
 					iv.setImageResource((data.get(index * 8 + position)).imageId);

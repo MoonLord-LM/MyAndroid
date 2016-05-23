@@ -33,9 +33,9 @@ public class DemoViewPager2 extends android.app.Activity {
 		//
 		viewList=new java.util.ArrayList<android.view.View>();
 		android.view.LayoutInflater inflater=getLayoutInflater();
-		view1=inflater.inflate(R.layout.view_pager_page1, (android.view.ViewGroup)My.Const.Null);
-		view2=inflater.inflate(R.layout.view_pager_page2, (android.view.ViewGroup)My.Const.Null);
-		view3=inflater.inflate(R.layout.view_pager_page3, (android.view.ViewGroup)My.Const.Null);
+		view1=inflater.inflate(R.layout.view_pager_page1, (android.view.ViewGroup)null);
+		view2=inflater.inflate(R.layout.view_pager_page2, (android.view.ViewGroup)null);
+		view3=inflater.inflate(R.layout.view_pager_page3, (android.view.ViewGroup)null);
 		viewList.add(view1);
 		viewList.add(view2);
 		viewList.add(view3);
